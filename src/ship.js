@@ -14,7 +14,7 @@ const shipFactory = (size) => {
     return 'sunk';
   };
 
-  return { hit };
+  return { hit, shipSize };
 };
 
 module.exports = shipFactory;
