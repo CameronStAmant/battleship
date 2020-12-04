@@ -102,16 +102,25 @@ const gameboardFactory = () => {
     J10: '',
   };
 
+  const denyDeployment = (option) => {
+    switch (option) {
+      case 'offBoard':
+        return 'Your deployment would go off the board';
+      case 'onShip':
+        return 'You cannot deploy on another ship.';
+    }
+  };
+
   const deploy = (ship, coordinate, direction) => {
+    let deployLocations = [];
     if (direction === 'vertical') {
       if (ship.shipSize.length - 1 + parseInt(coordinate.substring(1)) > 10) {
-        return 'Ship cannot go here vertically';
+        return denyDeployment('offBoard');
       } else {
-        let deployLocations = [];
         for (let i = 0; i < ship.shipSize.length; i++) {
           if (i === 0) {
             if (board[coordinate] === 'ship') {
-              return 'You cannot deploy on another ship.';
+              return denyDeployment('onShip');
             } else {
               deployLocations.push(coordinate);
             }
@@ -121,7 +130,7 @@ const gameboardFactory = () => {
                 coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i)
               ] === 'ship'
             ) {
-              return 'You cannot deploy on another ship.';
+              return denyDeployment('onShip');
             } else {
               deployLocations.push(
                 coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i)
@@ -129,23 +138,18 @@ const gameboardFactory = () => {
             }
           }
         }
-        for (let j = 0; j < deployLocations.length; j++) {
-          board[deployLocations[j]] = 'ship';
-        }
       }
-      return board;
     } else if (direction === 'horizontal') {
       if (
         ship.shipSize.length - 1 + coordinate.charCodeAt(0) >
         'J'.charCodeAt(0)
       ) {
-        return 'Ship cannot go here horizontally';
+        return denyDeployment('offBoard');
       } else {
-        let deployLocations = [];
         for (let i = 0; i < ship.shipSize.length; i++) {
           if (i === 0) {
             if (board[coordinate] === 'ship') {
-              return 'You cannot deploy on another ship.';
+              return denyDeployment('onShip');
             } else {
               deployLocations.push(coordinate);
             }
@@ -156,7 +160,7 @@ const gameboardFactory = () => {
                 String.fromCharCode(grabCharCode) + coordinate.charAt(1)
               ] === 'ship'
             ) {
-              return 'You cannot deploy on another ship.';
+              return denyDeployment('onShip');
             } else {
               deployLocations.push(
                 String.fromCharCode(grabCharCode) + coordinate.charAt(1)
@@ -164,14 +168,13 @@ const gameboardFactory = () => {
             }
           }
         }
-        for (let j = 0; j < deployLocations.length; j++) {
-          board[deployLocations[j]] = 'ship';
-        }
       }
+    }
+    for (let j = 0; j < deployLocations.length; j++) {
+      board[deployLocations[j]] = 'ship';
     }
     return board;
   };
-
   return { board, deploy };
 };
 
