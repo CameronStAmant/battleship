@@ -1,6 +1,17 @@
-const shipFactory = (size) => {
+const shipFactory = (size, type = null) => {
   const shipSize = new Array(size);
+  let name;
+  if (size === 4) {
+    name = 'battleship';
+  }
+  /** based on ship name */
+  if (type === 'battleship') {
+  }
+  //   shipSize.fill('battleship');
+  /** */
+  // } else {
   shipSize.fill('');
+  // }
 
   const hit = (position) => {
     shipSize[position] = 'hit';
@@ -14,7 +25,7 @@ const shipFactory = (size) => {
     return 'sunk';
   };
 
-  return { hit, shipSize };
+  return { hit, shipSize, name };
 };
 
 module.exports = shipFactory;

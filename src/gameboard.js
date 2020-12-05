@@ -1,4 +1,7 @@
+// import
+
 const gameboardFactory = () => {
+  let fleet = [];
   let board = {
     A1: '',
     A2: '',
@@ -123,6 +126,7 @@ const gameboardFactory = () => {
               return denyDeployment('onShip');
             } else {
               deployLocations.push(coordinate);
+              ship.shipSize[i] = coordinate;
             }
           } else {
             if (
@@ -135,6 +139,8 @@ const gameboardFactory = () => {
               deployLocations.push(
                 coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i)
               );
+              ship.shipSize[i] =
+                coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i);
             }
           }
         }
@@ -171,11 +177,31 @@ const gameboardFactory = () => {
       }
     }
     for (let j = 0; j < deployLocations.length; j++) {
-      board[deployLocations[j]] = 'ship';
+      board[deployLocations[j]] = 'battleship' /*'ship'*/;
     }
+    fleet.push(ship);
     return board;
   };
-  return { board, deploy };
+
+  const receiveAttack = (coordinate) => {
+    if (board[coordinate] === 'battleship' /*'ship'*/) {
+      // return board[coordinate];
+      for (let r = 0; r < fleet.length; r++) {
+        for (let i = 0; i < fleet[0].shipSize.length; i++) {
+          if (fleet[r].shipSize[i] === coordinate) {
+            fleet[r].hit(i);
+            return 'Hit!';
+          }
+        }
+      }
+      return fleet[0];
+    } else {
+      board[coordinate] = 'miss';
+      return 'Miss!';
+    }
+  };
+
+  return { board, deploy, receiveAttack, fleet };
 };
 
 module.exports = gameboardFactory;
