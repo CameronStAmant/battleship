@@ -480,7 +480,13 @@ describe('receiveAttack tests', () => {
   });
 });
 
-test.only('successful attack knows which ship was hit', () => {
+test('successful attack knows which ship was hit', () => {
   gameboard.deploy(shipFactory(4, 'battleship'), 'F5', 'vertical');
   expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
+});
+
+describe('Each ship registers correctly', () => {
+  test('carrier ships', () => {
+    gameboard.deploy(shipFactory(5));
+  });
 });

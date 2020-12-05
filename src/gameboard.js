@@ -177,15 +177,14 @@ const gameboardFactory = () => {
       }
     }
     for (let j = 0; j < deployLocations.length; j++) {
-      board[deployLocations[j]] = 'battleship' /*'ship'*/;
+      board[deployLocations[j]] = 'ship';
     }
     fleet.push(ship);
     return board;
   };
 
   const receiveAttack = (coordinate) => {
-    if (board[coordinate] === 'battleship' /*'ship'*/) {
-      // return board[coordinate];
+    if (board[coordinate] === 'ship') {
       for (let r = 0; r < fleet.length; r++) {
         for (let i = 0; i < fleet[0].shipSize.length; i++) {
           if (fleet[r].shipSize[i] === coordinate) {
@@ -194,7 +193,6 @@ const gameboardFactory = () => {
           }
         }
       }
-      return fleet[0];
     } else {
       board[coordinate] = 'miss';
       return 'Miss!';

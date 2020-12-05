@@ -1,17 +1,8 @@
 const shipFactory = (size, type = null) => {
   const shipSize = new Array(size);
-  let name;
-  if (size === 4) {
-    name = 'battleship';
-  }
-  /** based on ship name */
-  if (type === 'battleship') {
-  }
-  //   shipSize.fill('battleship');
-  /** */
-  // } else {
+  const name = type;
+
   shipSize.fill('');
-  // }
 
   const hit = (position) => {
     shipSize[position] = 'hit';
