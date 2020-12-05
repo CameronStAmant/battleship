@@ -487,6 +487,23 @@ test('successful attack knows which ship was hit', () => {
 
 describe('Each ship registers correctly', () => {
   test('carrier ships', () => {
-    gameboard.deploy(shipFactory(5));
+    gameboard.deploy(shipFactory(5, 'carrier'));
+    expect(gameboard.fleet[0].name).toEqual('carrier');
+  });
+  test('battleship ships', () => {
+    gameboard.deploy(shipFactory(4, 'battleship'));
+    expect(gameboard.fleet[0].name).toEqual('battleship');
+  });
+  test('cruiser ships', () => {
+    gameboard.deploy(shipFactory(3, 'cruiser'));
+    expect(gameboard.fleet[0].name).toEqual('cruiser');
+  });
+  test('submarine ships', () => {
+    gameboard.deploy(shipFactory(3, 'submarine'));
+    expect(gameboard.fleet[0].name).toEqual('submarine');
+  });
+  test('destroyer ships', () => {
+    gameboard.deploy(shipFactory(2, 'destroyer'));
+    expect(gameboard.fleet[0].name).toEqual('destroyer');
   });
 });
