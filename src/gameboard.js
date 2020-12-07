@@ -1,5 +1,3 @@
-// import
-
 const gameboardFactory = () => {
   let fleet = [];
   let board = {
@@ -152,15 +150,21 @@ const gameboardFactory = () => {
       ) {
         return denyDeployment('offBoard');
       } else {
-        for (let i = 0; i < ship.shipSize.length; i++) {
-          if (i === 0) {
+        for (
+          let specificPositionOnShip = 0;
+          specificPositionOnShip < ship.shipSize.length;
+          specificPositionOnShip++
+        ) {
+          if (specificPositionOnShip === 0) {
             if (board[coordinate] === 'ship') {
               return denyDeployment('onShip');
             } else {
               deployLocations.push(coordinate);
+              ship.shipSize[specificPositionOnShip] = coordinate;
             }
           } else {
-            const grabCharCode = coordinate.charCodeAt(0) + i;
+            const grabCharCode =
+              coordinate.charCodeAt(0) + specificPositionOnShip;
             if (
               board[
                 String.fromCharCode(grabCharCode) + coordinate.charAt(1)
@@ -171,6 +175,8 @@ const gameboardFactory = () => {
               deployLocations.push(
                 String.fromCharCode(grabCharCode) + coordinate.charAt(1)
               );
+              ship.shipSize[specificPositionOnShip] =
+                String.fromCharCode(grabCharCode) + coordinate.charAt(1);
             }
           }
         }
@@ -185,11 +191,40 @@ const gameboardFactory = () => {
 
   const receiveAttack = (coordinate) => {
     if (board[coordinate] === 'ship') {
-      for (let r = 0; r < fleet.length; r++) {
-        for (let i = 0; i < fleet[0].shipSize.length; i++) {
-          if (fleet[r].shipSize[i] === coordinate) {
-            fleet[r].hit(i);
-            return 'Hit!';
+      // if it's a hit
+
+      for (let specificBoat = 0; specificBoat < fleet.length; specificBoat++) {
+        // loops through all ships in the fleet
+        for (
+          let specificPositionOnShip = 0;
+          specificPositionOnShip < fleet[specificBoat].shipSize.length;
+          specificPositionOnShip++
+        ) {
+          // loops through each ships size/positions on the ship
+          if (
+            fleet[specificBoat].shipSize[specificPositionOnShip] === coordinate
+          ) {
+            // finds which ship will be hit, along with the location on the ship that will be hit
+            if (fleet[specificBoat].hit(specificPositionOnShip) === 'sunk') {
+              // sends the hit function and checks if the resulting hit sinks the ship
+              for (let e = 0; e < fleet[specificBoat].shipSize.length; e++) {
+                // marks each position for the ship as 'sunk' on the board
+                board[fleet[specificBoat].shipSize[e].split('hit-sunk')[0]] =
+                  'sunk';
+              }
+              let arr = [];
+              for (const [key, value] of Object.entries(board)) {
+                arr.push(value);
+              }
+              if (arr.every((item) => item === '' || item === 'sunk')) {
+                return 'Game over!';
+              } else {
+                return 'sunk';
+              }
+            } else {
+              board[coordinate] = 'hit';
+              return 'Hit!';
+            }
           }
         }
       }

@@ -4,14 +4,14 @@ let gameboard;
 
 let ship1;
 beforeEach(() => {
-  ship1 = shipFactory(3);
-  ship2 = shipFactory(4, 'battleship');
+  ship1 = shipFactory('cruiser');
+  ship2 = shipFactory('battleship');
   gameboard = gameboardFactory();
 });
 
 describe('vertical tests', () => {
   test('correctly places on row 10', () => {
-    expect(gameboard.deploy(shipFactory(3), 'A8', 'vertical')).toEqual({
+    expect(gameboard.deploy(shipFactory('cruiser'), 'A8', 'vertical')).toEqual({
       A1: '',
       A2: '',
       A3: '',
@@ -116,21 +116,21 @@ describe('vertical tests', () => {
   });
 
   test('errors on placements going past row 10 (the last row)', () => {
-    expect(gameboard.deploy(shipFactory(3), 'A10', 'vertical')).toEqual(
+    expect(gameboard.deploy(shipFactory('cruiser'), 'A10', 'vertical')).toEqual(
       'Your deployment would go off the board'
     );
   });
 
   test('ships cannot be placed on top of each other vertically', () => {
-    gameboard.deploy(shipFactory(4), 'C7', 'horizontal');
-    expect(gameboard.deploy(shipFactory(3), 'E6', 'vertical')).toEqual(
+    gameboard.deploy(shipFactory('battleship'), 'C7', 'horizontal');
+    expect(gameboard.deploy(shipFactory('cruiser'), 'E6', 'vertical')).toEqual(
       'You cannot deploy on another ship.'
     );
   });
 
   test('when ships cannot be placed on another vertically, the board is unchanged', () => {
-    gameboard.deploy(shipFactory(4), 'C7', 'horizontal');
-    gameboard.deploy(shipFactory(3), 'E6', 'vertical');
+    gameboard.deploy(shipFactory('battleship'), 'C7', 'horizontal');
+    gameboard.deploy(shipFactory('cruiser'), 'E6', 'vertical');
     expect(gameboard.board).toEqual({
       A1: '',
       A2: '',
@@ -238,7 +238,9 @@ describe('vertical tests', () => {
 
 describe('horizontal tests', () => {
   test('correctly places on column J', () => {
-    expect(gameboard.deploy(shipFactory(3), 'H5', 'horizontal')).toEqual({
+    expect(
+      gameboard.deploy(shipFactory('cruiser'), 'H5', 'horizontal')
+    ).toEqual({
       A1: '',
       A2: '',
       A3: '',
@@ -343,21 +345,21 @@ describe('horizontal tests', () => {
   });
 
   test('errors on placements going past column J (the last column)', () => {
-    expect(gameboard.deploy(shipFactory(3), 'I5', 'horizontal')).toEqual(
-      'Your deployment would go off the board'
-    );
+    expect(
+      gameboard.deploy(shipFactory('cruiser'), 'I5', 'horizontal')
+    ).toEqual('Your deployment would go off the board');
   });
 
   test('ships cannot be placed on top of each other horizontally', () => {
-    gameboard.deploy(shipFactory(3), 'E6', 'vertical');
-    expect(gameboard.deploy(shipFactory(4), 'C7', 'horizontal')).toEqual(
-      'You cannot deploy on another ship.'
-    );
+    gameboard.deploy(shipFactory('cruiser'), 'E6', 'vertical');
+    expect(
+      gameboard.deploy(shipFactory('battleship'), 'C7', 'horizontal')
+    ).toEqual('You cannot deploy on another ship.');
   });
 
   test('when ships cannot be placed on another horizontally, the board is unchanged', () => {
-    gameboard.deploy(shipFactory(3), 'E6', 'vertical');
-    gameboard.deploy(shipFactory(4), 'C7', 'horizontal');
+    gameboard.deploy(shipFactory('cruiser'), 'E6', 'vertical');
+    gameboard.deploy(shipFactory('battleship'), 'C7', 'horizontal');
     expect(gameboard.board).toEqual({
       A1: '',
       A2: '',
@@ -465,45 +467,56 @@ describe('horizontal tests', () => {
 
 describe('receiveAttack tests', () => {
   test('Attack is a hit', () => {
-    gameboard.deploy(shipFactory(4), 'F5', 'vertical');
+    gameboard.deploy(shipFactory('battleship'), 'F5', 'vertical');
     expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
   });
 
-  // test.only('Attack that hits is ', () => {
-  //   gameboard.deploy(shipFactory(4), 'F5', 'vertical');
-  //   expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
-  // });
+  test('successful attack knows which ship was hit', () => {
+    gameboard.deploy(shipFactory('battleship'), 'F5', 'vertical');
+    expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
+  });
 
   test('Attack is a miss', () => {
-    gameboard.deploy(shipFactory(4), 'F5', 'vertical');
+    gameboard.deploy(shipFactory('battleship'), 'F5', 'vertical');
     expect(gameboard.receiveAttack('C7')).toEqual('Miss!');
   });
 });
 
-test('successful attack knows which ship was hit', () => {
-  gameboard.deploy(shipFactory(4, 'battleship'), 'F5', 'vertical');
-  expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
-});
-
 describe('Each ship registers correctly', () => {
   test('carrier ships', () => {
-    gameboard.deploy(shipFactory(5, 'carrier'));
+    gameboard.deploy(shipFactory('carrier'));
     expect(gameboard.fleet[0].name).toEqual('carrier');
   });
   test('battleship ships', () => {
-    gameboard.deploy(shipFactory(4, 'battleship'));
+    gameboard.deploy(shipFactory('battleship'));
     expect(gameboard.fleet[0].name).toEqual('battleship');
   });
   test('cruiser ships', () => {
-    gameboard.deploy(shipFactory(3, 'cruiser'));
+    gameboard.deploy(shipFactory('cruiser'));
     expect(gameboard.fleet[0].name).toEqual('cruiser');
   });
   test('submarine ships', () => {
-    gameboard.deploy(shipFactory(3, 'submarine'));
+    gameboard.deploy(shipFactory('submarine'));
     expect(gameboard.fleet[0].name).toEqual('submarine');
   });
   test('destroyer ships', () => {
-    gameboard.deploy(shipFactory(2, 'destroyer'));
+    gameboard.deploy(shipFactory('destroyer'));
     expect(gameboard.fleet[0].name).toEqual('destroyer');
   });
+});
+
+test('board reports when all ships are sunk (with only one on the board)', () => {
+  gameboard.deploy(shipFactory('destroyer'), 'B3', 'vertical');
+  gameboard.receiveAttack('B4');
+  expect(gameboard.receiveAttack('B3')).toEqual('Game over!');
+});
+
+test('board reports when all ships are sunk (with two on the board)', () => {
+  gameboard.deploy(shipFactory('destroyer'), 'B3', 'vertical');
+  gameboard.deploy(shipFactory('cruiser'), 'F6', 'horizontal');
+  gameboard.receiveAttack('B4');
+  gameboard.receiveAttack('H6');
+  gameboard.receiveAttack('B3');
+  gameboard.receiveAttack('F6');
+  expect(gameboard.receiveAttack('G6')).toEqual('Game over!');
 });

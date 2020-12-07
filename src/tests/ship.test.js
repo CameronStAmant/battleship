@@ -2,11 +2,11 @@ const shipFactory = require('../ship.js');
 
 let ship;
 beforeEach(() => {
-  ship = shipFactory(5);
+  ship = shipFactory('carrier');
 });
 
 describe('registers hits', () => {
-  test('registers a hit', () => {
+  test('registers a single hit', () => {
     expect(ship.hit(1)).toEqual(['', 'hit', '', '', '']);
   });
 
