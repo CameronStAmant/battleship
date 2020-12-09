@@ -103,8 +103,8 @@ const gameboardFactory = () => {
     J10: '',
   };
 
-  const denyDeployment = (option) => {
-    switch (option) {
+  const denyDeployment = (denialReason) => {
+    switch (denialReason) {
       case 'offBoard':
         return 'Your deployment would go off the board';
       case 'onShip':
@@ -114,69 +114,62 @@ const gameboardFactory = () => {
 
   const deploy = (ship, coordinate, direction) => {
     let deployLocations = [];
+    const offBoardDenial = denyDeployment('offBoard');
+    const offShipDenial = denyDeployment('onShip');
+
     if (direction === 'vertical') {
       if (ship.shipSize.length - 1 + parseInt(coordinate.substring(1)) > 10) {
-        return denyDeployment('offBoard');
+        return offBoardDenial;
       } else {
         for (let i = 0; i < ship.shipSize.length; i++) {
+          let currentSpot =
+            coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i);
           if (i === 0) {
             if (board[coordinate] === 'ship') {
-              return denyDeployment('onShip');
+              return offShipDenial;
             } else {
               deployLocations.push(coordinate);
               ship.shipSize[i] = coordinate;
             }
           } else {
-            if (
-              board[
-                coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i)
-              ] === 'ship'
-            ) {
-              return denyDeployment('onShip');
+            if (board[currentSpot] === 'ship') {
+              return offShipDenial;
             } else {
-              deployLocations.push(
-                coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i)
-              );
-              ship.shipSize[i] =
-                coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i);
+              deployLocations.push(currentSpot);
+              ship.shipSize[i] = currentSpot;
             }
           }
         }
       }
     } else if (direction === 'horizontal') {
+      const endOfBoard = 'J';
       if (
         ship.shipSize.length - 1 + coordinate.charCodeAt(0) >
-        'J'.charCodeAt(0)
+        endOfBoard.charCodeAt(0)
       ) {
-        return denyDeployment('offBoard');
+        return offBoardDenial;
       } else {
         for (
-          let specificPositionOnShip = 0;
-          specificPositionOnShip < ship.shipSize.length;
-          specificPositionOnShip++
+          let shipSection = 0;
+          shipSection < ship.shipSize.length;
+          shipSection++
         ) {
-          if (specificPositionOnShip === 0) {
+          if (shipSection === 0) {
             if (board[coordinate] === 'ship') {
-              return denyDeployment('onShip');
+              return offShipDenial;
             } else {
               deployLocations.push(coordinate);
-              ship.shipSize[specificPositionOnShip] = coordinate;
+              ship.shipSize[shipSection] = coordinate;
             }
           } else {
-            const grabCharCode =
-              coordinate.charCodeAt(0) + specificPositionOnShip;
-            if (
-              board[
-                String.fromCharCode(grabCharCode) + coordinate.charAt(1)
-              ] === 'ship'
-            ) {
-              return denyDeployment('onShip');
+            const grabCharCode = coordinate.charCodeAt(0) + shipSection;
+            let currentSpot =
+              String.fromCharCode(grabCharCode) + coordinate.charAt(1);
+            if (board[currentSpot] === 'ship') {
+              return offShipDenial;
             } else {
-              deployLocations.push(
-                String.fromCharCode(grabCharCode) + coordinate.charAt(1)
-              );
-              ship.shipSize[specificPositionOnShip] =
-                String.fromCharCode(grabCharCode) + coordinate.charAt(1);
+              deployLocations.push(currentSpot);
+              ship.shipSize[shipSection] = currentSpot;
             }
           }
         }
@@ -191,24 +184,15 @@ const gameboardFactory = () => {
 
   const receiveAttack = (coordinate) => {
     if (board[coordinate] === 'ship') {
-      // if it's a hit
-
       for (let specificBoat = 0; specificBoat < fleet.length; specificBoat++) {
-        // loops through all ships in the fleet
         for (
-          let specificPositionOnShip = 0;
-          specificPositionOnShip < fleet[specificBoat].shipSize.length;
-          specificPositionOnShip++
+          let shipSection = 0;
+          shipSection < fleet[specificBoat].shipSize.length;
+          shipSection++
         ) {
-          // loops through each ships size/positions on the ship
-          if (
-            fleet[specificBoat].shipSize[specificPositionOnShip] === coordinate
-          ) {
-            // finds which ship will be hit, along with the location on the ship that will be hit
-            if (fleet[specificBoat].hit(specificPositionOnShip) === 'sunk') {
-              // sends the hit function and checks if the resulting hit sinks the ship
+          if (fleet[specificBoat].shipSize[shipSection] === coordinate) {
+            if (fleet[specificBoat].hit(shipSection) === 'sunk') {
               for (let e = 0; e < fleet[specificBoat].shipSize.length; e++) {
-                // marks each position for the ship as 'sunk' on the board
                 board[fleet[specificBoat].shipSize[e].split('hit-sunk')[0]] =
                   'sunk';
               }

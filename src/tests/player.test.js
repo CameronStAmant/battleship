@@ -4,11 +4,13 @@ const gameboardFactory = require('../gameboard.js');
 
 let player1;
 let player2;
+let gameboard1;
+let gameboard2;
 beforeEach(() => {
-  player1 = playerFactory('Frodo');
+  player1 = playerFactory();
   gameboard1 = gameboardFactory();
 
-  player2 = playerFactory('Sam');
+  player2 = playerFactory();
   gameboard2 = gameboardFactory();
 });
 
