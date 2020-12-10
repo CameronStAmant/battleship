@@ -1,0 +1,17 @@
+.grid-container {
+  width: 500px;
+  height: 500px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.grid-item {
+  border-style: solid;
+  border-color: black;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+}
