@@ -6,8 +6,10 @@ const game = () => {
   let gameboard1;
   let gameboard2;
   let board;
+  let player1;
+  let player2;
   const setup = () => {
-    const player1 = playerFactory();
+    player1 = playerFactory();
     gameboard1 = gameboardFactory();
     gameboard1.deploy(shipFactory('carrier'), 'A1', 'horizontal');
     gameboard1.deploy(shipFactory('battleship'), 'A2', 'horizontal');
@@ -15,7 +17,7 @@ const game = () => {
     gameboard1.deploy(shipFactory('submarine'), 'A4', 'horizontal');
     gameboard1.deploy(shipFactory('destroyer'), 'A5', 'horizontal');
 
-    const player2 = playerFactory();
+    player2 = playerFactory();
     gameboard2 = gameboardFactory();
     gameboard2.deploy(shipFactory('carrier'), 'A1', 'vertical');
     gameboard2.deploy(shipFactory('battleship'), 'B1', 'vertical');
@@ -24,13 +26,20 @@ const game = () => {
     gameboard2.deploy(shipFactory('destroyer'), 'E1', 'vertical');
 
     boards = [gameboard1.board, gameboard2.board];
-    let content = document.getElementById('content');
+
+    displayBoards();
+
+    return { boards };
+  };
+
+  const displayBoards = () => {
+    let content1 = document.getElementById('content');
     let header = document.createElement('div');
     header.innerHTML = 'Battleship';
-    content.append(header);
+    content1.append(header);
     let body = document.createElement('div');
     body.className = 'main';
-    content.append(body);
+    content1.append(body);
     let board1 = document.createElement('div');
     board1.innerHTML = 'Player 1';
     board1.class = 'playerOneBoard';
@@ -43,7 +52,6 @@ const game = () => {
       let listItem = document.createElement('div');
       listItem.id = `1-${key}`;
       listItem.className = 'grid-item';
-      //
       if (value === 'ship') {
         listItem.addEventListener('click', function (a) {
           listItem.innerHTML = 'X';
@@ -74,16 +82,16 @@ const game = () => {
         });
       } else {
         listItem.addEventListener('click', function (a) {
-          listItem.innerHTML = 'O';
+          listItem.innerHTML = '-';
         });
       }
       list2.append(listItem);
     }
-
-    return { boards };
   };
 
   const round = () => {
+    gameboard2.receiveAttack('A10');
+    gameboard1.receiveAttack('A1');
     return { boards };
   };
 
