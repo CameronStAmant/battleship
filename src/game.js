@@ -3,34 +3,22 @@ const gameboardFactory = require('./gameboard.js');
 const shipFactory = require('./ship.js');
 
 const game = () => {
-  let gameboard1;
-  let gameboard2;
-  let boards;
-  let player1;
-  let player2;
-  const setup = () => {
-    player1 = playerFactory();
-    gameboard1 = gameboardFactory();
-    gameboard1.deploy(shipFactory('carrier'), 'A1', 'horizontal');
-    gameboard1.deploy(shipFactory('battleship'), 'A2', 'horizontal');
-    gameboard1.deploy(shipFactory('cruiser'), 'A3', 'horizontal');
-    gameboard1.deploy(shipFactory('submarine'), 'A4', 'horizontal');
-    gameboard1.deploy(shipFactory('destroyer'), 'A5', 'horizontal');
+  let gameboard1 = gameboardFactory();
+  let gameboard2 = gameboardFactory();
+  let boards = [gameboard1.board, gameboard2.board];
+  let player1 = playerFactory();
+  let player2 = playerFactory();
+  gameboard1.deploy(shipFactory('carrier'), 'A1', 'horizontal');
+  gameboard1.deploy(shipFactory('battleship'), 'A2', 'horizontal');
+  gameboard1.deploy(shipFactory('cruiser'), 'A3', 'horizontal');
+  gameboard1.deploy(shipFactory('submarine'), 'A4', 'horizontal');
+  gameboard1.deploy(shipFactory('destroyer'), 'A5', 'horizontal');
 
-    player2 = playerFactory();
-    gameboard2 = gameboardFactory();
-    gameboard2.deploy(shipFactory('carrier'), 'A1', 'vertical');
-    gameboard2.deploy(shipFactory('battleship'), 'B1', 'vertical');
-    gameboard2.deploy(shipFactory('cruiser'), 'C1', 'vertical');
-    gameboard2.deploy(shipFactory('submarine'), 'D1', 'vertical');
-    gameboard2.deploy(shipFactory('destroyer'), 'E1', 'vertical');
-
-    boards = [gameboard1.board, gameboard2.board];
-
-    displayBoards();
-
-    return { boards };
-  };
+  gameboard2.deploy(shipFactory('carrier'), 'A1', 'vertical');
+  gameboard2.deploy(shipFactory('battleship'), 'B1', 'vertical');
+  gameboard2.deploy(shipFactory('cruiser'), 'C1', 'vertical');
+  gameboard2.deploy(shipFactory('submarine'), 'D1', 'vertical');
+  gameboard2.deploy(shipFactory('destroyer'), 'E1', 'vertical');
 
   const displayBoards = () => {
     let content1 = document.getElementById('content');
@@ -89,18 +77,21 @@ const game = () => {
     }
   };
 
-  const round = (playerOneCoordinate, playerTwoCoordinate = null) => {
-    player1.attackEnemy(playerOneCoordinate, gameboard2);
-    player2.attackEnemy(playerTwoCoordinate, gameboard1);
-    return { boards };
-  };
+  // let over = false;
+  // if (over !== true) {
+  //   while (over !== true) {
+  //     // player1.attackEnemy();
+  //   }
+  // }
+  // const round = (playerOneCoordinate, playerTwoCoordinate = null) => {
+  //   player1.attackEnemy(playerOneCoordinate, gameboard2);
+  //   player2.attackEnemy(playerTwoCoordinate, gameboard1);
+  //   return { boards };
+  // };
 
-  const continuousRounds = () => {
-    // If no one has won
-    // play another round
-  };
+  displayBoards();
 
-  return { setup, round };
+  return { boards };
 };
 
 module.exports = game;

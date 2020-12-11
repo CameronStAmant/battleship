@@ -4,7 +4,7 @@ describe('Gameplay', () => {
   test('Sets up the game', () => {
     const game = gameFactory();
     document.body.innerHTML = '<div id=content>' + '</div>';
-    expect(game.setup()).toEqual({
+    expect(game).toEqual({
       boards: [
         {
           A1: 'ship',
@@ -216,9 +216,8 @@ describe('Gameplay', () => {
 
   test('Plays a round', () => {
     const game1 = gameFactory();
-    game1.setup();
 
-    expect(game1.round('A1', 'A10')).toEqual({
+    expect(game1.player1.turn('A1')).toEqual({
       boards: [
         {
           A1: 'ship',
@@ -428,8 +427,8 @@ describe('Gameplay', () => {
     });
   });
 
-  test('Plays two rounds', () => {
-    const game2 = gameFactory();
-    game2.setup();
-  });
+  // test('Plays two rounds', () => {
+  //   const game2 = gameFactory();
+  //   game2.setup();
+  // });
 });
