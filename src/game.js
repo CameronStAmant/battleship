@@ -5,7 +5,7 @@ const shipFactory = require('./ship.js');
 const game = () => {
   let gameboard1;
   let gameboard2;
-  let board;
+  let boards;
   let player1;
   let player2;
   const setup = () => {
@@ -89,10 +89,15 @@ const game = () => {
     }
   };
 
-  const round = () => {
-    gameboard2.receiveAttack('A10');
-    gameboard1.receiveAttack('A1');
+  const round = (playerOneCoordinate, playerTwoCoordinate = null) => {
+    player1.attackEnemy(playerOneCoordinate, gameboard2);
+    player2.attackEnemy(playerTwoCoordinate, gameboard1);
     return { boards };
+  };
+
+  const continuousRounds = () => {
+    // If no one has won
+    // play another round
   };
 
   return { setup, round };

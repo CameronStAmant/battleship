@@ -218,11 +218,11 @@ describe('Gameplay', () => {
     const game1 = gameFactory();
     game1.setup();
 
-    expect(game1.round()).toEqual({
+    expect(game1.round('A1', 'A10')).toEqual({
       boards: [
         {
-          A1: 'hit',
-          A10: '',
+          A1: 'ship',
+          A10: 'miss',
           A2: 'ship',
           A3: 'ship',
           A4: 'ship',
@@ -323,8 +323,8 @@ describe('Gameplay', () => {
           J9: '',
         },
         {
-          A1: 'ship',
-          A10: 'miss',
+          A1: 'hit',
+          A10: '',
           A2: 'ship',
           A3: 'ship',
           A4: 'ship',
@@ -426,5 +426,10 @@ describe('Gameplay', () => {
         },
       ],
     });
+  });
+
+  test('Plays two rounds', () => {
+    const game2 = gameFactory();
+    game2.setup();
   });
 });
