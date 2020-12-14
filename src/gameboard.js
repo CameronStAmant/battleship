@@ -182,7 +182,7 @@ const gameboardFactory = () => {
     return board;
   };
 
-  const receiveAttack = (coordinate) => {
+  const receiveAttack = (coordinate, computer = false) => {
     if (board[coordinate] === 'ship') {
       for (let specificBoat = 0; specificBoat < fleet.length; specificBoat++) {
         for (
@@ -207,14 +207,22 @@ const gameboardFactory = () => {
               }
             } else {
               board[coordinate] = 'hit';
-              return 'Hit!';
+              if ((computer = true)) {
+                return coordinate;
+              } else {
+                return 'Hit!';
+              }
             }
           }
         }
       }
     } else {
       board[coordinate] = 'miss';
-      return 'Miss!';
+      if ((computer = true)) {
+        return coordinate;
+      } else {
+        return 'Miss!';
+      }
     }
   };
 

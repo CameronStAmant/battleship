@@ -41,12 +41,14 @@ const gameFactory = () => {
       listItem.id = `1-${key}`;
       listItem.className = 'grid-item';
       if (value === 'ship') {
+        listItem.innerHTML = 'X';
         listItem.addEventListener('click', function (a) {
-          listItem.innerHTML = 'X';
+          listItem.style.backgroundColor = 'red';
         });
       } else {
+        listItem.innerHTML = '-';
         listItem.addEventListener('click', function (a) {
-          listItem.innerHTML = '-';
+          listItem.style.backgroundColor = 'green';
         });
       }
       list.append(listItem);
@@ -59,6 +61,7 @@ const gameFactory = () => {
     let list2 = document.createElement('ul');
     list2.className = 'grid-container';
     board2.appendChild(list2);
+
     for (const [key, value] of Object.entries(gameboard2.board)) {
       let listItem = document.createElement('div');
       listItem.id = `2-${key}`;
@@ -67,11 +70,20 @@ const gameFactory = () => {
       if (value === 'ship') {
         listItem.addEventListener('click', function (a) {
           listItem.innerHTML = 'X';
+          listItem.style.backgroundColor = 'red';
           player1.attackEnemy(listItem, gameboard2);
+          document
+            .getElementById(`1-${player2.attackEnemy(null, gameboard1)}`)
+            .click();
         });
       } else {
         listItem.addEventListener('click', function (a) {
           listItem.innerHTML = '-';
+          listItem.style.backgroundColor = 'green';
+          player1.attackEnemy(listItem, gameboard2);
+          document
+            .getElementById(`1-${player2.attackEnemy(null, gameboard1)}`)
+            .click();
         });
       }
       list2.append(listItem);

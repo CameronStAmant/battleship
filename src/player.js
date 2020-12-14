@@ -11,7 +11,7 @@ const playerFactory = () => {
         remainingCoordinates[
           Math.floor(Math.random() * remainingCoordinates.length)
         ];
-      return enemyBoard.receiveAttack(randomCoordinate);
+      return enemyBoard.receiveAttack(randomCoordinate, true);
     }
     return enemyBoard.receiveAttack(coordinate);
   };
