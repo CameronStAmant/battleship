@@ -2,7 +2,7 @@ const playerFactory = require('./player.js');
 const gameboardFactory = require('./gameboard.js');
 const shipFactory = require('./ship.js');
 
-const game = () => {
+const gameFactory = () => {
   let gameboard1 = gameboardFactory();
   let gameboard2 = gameboardFactory();
   let boards = [gameboard1.board, gameboard2.board];
@@ -67,6 +67,7 @@ const game = () => {
       if (value === 'ship') {
         listItem.addEventListener('click', function (a) {
           listItem.innerHTML = 'X';
+          player1.attackEnemy(listItem, gameboard2);
         });
       } else {
         listItem.addEventListener('click', function (a) {
@@ -77,11 +78,9 @@ const game = () => {
     }
   };
 
-  // let over = false;
-  // if (over !== true) {
-  //   while (over !== true) {
-  //     // player1.attackEnemy();
-  //   }
+  // let gameOver = false;
+  // while (gameOver !== true) {
+  // player1.attackEnemy();
   // }
   // const round = (playerOneCoordinate, playerTwoCoordinate = null) => {
   //   player1.attackEnemy(playerOneCoordinate, gameboard2);
@@ -91,7 +90,7 @@ const game = () => {
 
   displayBoards();
 
-  return { boards };
+  return { boards, player1, player2, gameboard1, gameboard2 };
 };
 
-module.exports = game;
+module.exports = gameFactory;
