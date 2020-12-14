@@ -42,14 +42,8 @@ const gameFactory = () => {
       listItem.className = 'grid-item';
       if (value === 'ship') {
         listItem.innerHTML = 'X';
-        listItem.addEventListener('click', function (a) {
-          listItem.style.backgroundColor = 'red';
-        });
       } else {
         listItem.innerHTML = '-';
-        listItem.addEventListener('click', function (a) {
-          listItem.style.backgroundColor = 'green';
-        });
       }
       list.append(listItem);
     }
@@ -68,24 +62,37 @@ const gameFactory = () => {
       listItem.className = 'grid-item';
       //
       if (value === 'ship') {
-        listItem.addEventListener('click', function (a) {
+        listItem.addEventListener('click', function handler(a) {
+          a.currentTarget.removeEventListener(a.type, handler);
           listItem.innerHTML = 'X';
           listItem.style.backgroundColor = 'red';
           player1.attackEnemy(listItem, gameboard2);
-          document
-            .getElementById(`1-${player2.attackEnemy(null, gameboard1)}`)
-            .click();
+          let enemyMove = document.getElementById(
+            `1-${player2.attackEnemy(null, gameboard1)}`
+          );
+          if (enemyMove.innerHTML === 'X') {
+            enemyMove.style.backgroundColor = 'red';
+          } else {
+            enemyMove.style.backgroundColor = 'green';
+          }
         });
       } else {
-        listItem.addEventListener('click', function (a) {
+        listItem.addEventListener('click', function handler(a) {
+          a.currentTarget.removeEventListener(a.type, handler);
           listItem.innerHTML = '-';
           listItem.style.backgroundColor = 'green';
           player1.attackEnemy(listItem, gameboard2);
-          document
-            .getElementById(`1-${player2.attackEnemy(null, gameboard1)}`)
-            .click();
+          let enemyMove = document.getElementById(
+            `1-${player2.attackEnemy(null, gameboard1)}`
+          );
+          if (enemyMove.innerHTML === 'X') {
+            enemyMove.style.backgroundColor = 'red';
+          } else {
+            enemyMove.style.backgroundColor = 'green';
+          }
         });
       }
+
       list2.append(listItem);
     }
   };
