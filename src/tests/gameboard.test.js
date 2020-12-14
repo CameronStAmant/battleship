@@ -506,9 +506,11 @@ describe('Each ship registers correctly', () => {
 });
 
 test('board reports when all ships are sunk (with only one on the board)', () => {
-  gameboard.deploy(shipFactory('destroyer'), 'B3', 'vertical');
-  gameboard.receiveAttack('B4');
-  expect(gameboard.receiveAttack('B3')).toEqual('Game over!');
+  gameboard1 = gameboardFactory();
+  gameboard1.deploy(shipFactory('destroyer'), 'B3', 'vertical');
+  gameboard1.receiveAttack('B4');
+  gameboard1.receiveAttack('B3');
+  expect(gameboard1.gameOver(gameboard1.board)).toEqual('Game over!');
 });
 
 test('board reports when all ships are sunk (with two on the board)', () => {
@@ -518,5 +520,6 @@ test('board reports when all ships are sunk (with two on the board)', () => {
   gameboard.receiveAttack('H6');
   gameboard.receiveAttack('B3');
   gameboard.receiveAttack('F6');
-  expect(gameboard.receiveAttack('G6')).toEqual('Game over!');
+  gameboard.receiveAttack('G6');
+  expect(gameboard1.gameOver(gameboard1.board)).toEqual('Game over!');
 });

@@ -183,7 +183,11 @@ const gameboardFactory = () => {
   };
 
   const receiveAttack = (coordinate, computer = false) => {
+    if (computer === false) {
+      // console.log(board[coordinate]);
+    }
     if (board[coordinate] === 'ship') {
+      // console.log('here');
       for (let specificBoat = 0; specificBoat < fleet.length; specificBoat++) {
         for (
           let shipSection = 0;
@@ -200,10 +204,18 @@ const gameboardFactory = () => {
               for (const [key, value] of Object.entries(board)) {
                 arr.push(value);
               }
-              if (arr.every((item) => item === '' || item === 'sunk')) {
-                return 'Game over!';
+              // console.log(arr);
+              if (arr.every((item) => item !== 'ship')) {
+                // console.log('game over immenent');
+                return coordinate;
               } else {
-                return 'sunk';
+                // console.log('sunk!');
+                // console.log(`coorddinate: ${coordinate}`);
+                if ((computer = true)) {
+                  return coordinate;
+                } else {
+                  return 'sunk';
+                }
               }
             } else {
               board[coordinate] = 'hit';
@@ -226,7 +238,19 @@ const gameboardFactory = () => {
     }
   };
 
-  return { board, deploy, receiveAttack, fleet };
+  const gameOver = (enemyBoard) => {
+    let arr = [];
+    for (const [key, value] of Object.entries(board)) {
+      arr.push(value);
+    }
+    if (arr.every((item) => item !== 'ship')) {
+      console.log('GAME OVER');
+      alert('GAME OVER'); // tests pass, but look terrible with an alert
+      return 'Game over!';
+    }
+  };
+
+  return { board, deploy, receiveAttack, fleet, gameOver };
 };
 
 module.exports = gameboardFactory;

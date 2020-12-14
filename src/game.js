@@ -57,16 +57,16 @@ const gameFactory = () => {
     board2.appendChild(list2);
 
     for (const [key, value] of Object.entries(gameboard2.board)) {
-      let listItem = document.createElement('div');
-      listItem.id = `2-${key}`;
-      listItem.className = 'grid-item';
+      let listItem2 = document.createElement('div');
+      listItem2.id = `2-${key}`;
+      listItem2.className = 'grid-item';
       //
       if (value === 'ship') {
-        listItem.addEventListener('click', function handler(a) {
+        listItem2.addEventListener('click', function handler(a) {
           a.currentTarget.removeEventListener(a.type, handler);
-          listItem.innerHTML = 'X';
-          listItem.style.backgroundColor = 'red';
-          player1.attackEnemy(listItem, gameboard2);
+          listItem2.innerHTML = 'X';
+          listItem2.style.backgroundColor = 'red';
+          player1.attackEnemy(listItem2.id.substr(2), gameboard2);
           let enemyMove = document.getElementById(
             `1-${player2.attackEnemy(null, gameboard1)}`
           );
@@ -75,13 +75,15 @@ const gameFactory = () => {
           } else {
             enemyMove.style.backgroundColor = 'green';
           }
+          gameboard1.gameOver(gameboard2.board);
+          gameboard2.gameOver(gameboard1.board);
         });
       } else {
-        listItem.addEventListener('click', function handler(a) {
+        listItem2.addEventListener('click', function handler(a) {
           a.currentTarget.removeEventListener(a.type, handler);
-          listItem.innerHTML = '-';
-          listItem.style.backgroundColor = 'green';
-          player1.attackEnemy(listItem, gameboard2);
+          listItem2.innerHTML = '-';
+          listItem2.style.backgroundColor = 'green';
+          player1.attackEnemy(listItem2.id.substr(2), gameboard2);
           let enemyMove = document.getElementById(
             `1-${player2.attackEnemy(null, gameboard1)}`
           );
@@ -90,10 +92,12 @@ const gameFactory = () => {
           } else {
             enemyMove.style.backgroundColor = 'green';
           }
+          gameboard1.gameOver(gameboard2.board);
+          gameboard2.gameOver(gameboard1.board);
         });
       }
 
-      list2.append(listItem);
+      list2.append(listItem2);
     }
   };
 
