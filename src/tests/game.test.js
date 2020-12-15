@@ -1,4 +1,5 @@
 const gameFactory = require('../game.js');
+// const displayBoards = require('../displayHTML');
 
 describe('Gameplay', () => {
   test('Sets up the game', () => {
@@ -212,7 +213,7 @@ describe('Gameplay', () => {
     ]);
   });
 
-  test('Play two rouns', () => {
+  test('Play two rounds', () => {
     document.body.innerHTML = '<div id=content>' + '</div>';
     const game1 = gameFactory();
     game1.player1.attackEnemy('A1', game1.gameboard2);
