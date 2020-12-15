@@ -510,6 +510,7 @@ test('board reports when all ships are sunk (with only one on the board)', () =>
   gameboard1.deploy(shipFactory('destroyer'), 'B3', 'vertical');
   gameboard1.receiveAttack('B4');
   gameboard1.receiveAttack('B3');
+  window.alert = () => {};
   expect(gameboard1.gameOver(gameboard1.board)).toEqual('Game over!');
 });
 
@@ -521,5 +522,6 @@ test('board reports when all ships are sunk (with two on the board)', () => {
   gameboard.receiveAttack('B3');
   gameboard.receiveAttack('F6');
   gameboard.receiveAttack('G6');
+  window.alert = () => {};
   expect(gameboard1.gameOver(gameboard1.board)).toEqual('Game over!');
 });
