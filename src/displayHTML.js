@@ -1,4 +1,4 @@
-const displayBoards = (gameboard1, gameboard2, player1, player2) => {
+const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let content1 = document.getElementById('content');
   let header = document.createElement('div');
   header.innerHTML = 'Battleship';
@@ -45,16 +45,28 @@ const displayBoards = (gameboard1, gameboard2, player1, player2) => {
         listItem2.innerHTML = 'X';
         listItem2.style.backgroundColor = 'red';
         player1.attackEnemy(listItem2.id.substr(2), gameboard2);
+        if (
+          gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
+          gameboard2.gameOver(gameboard1.board) === 'Game over!'
+        ) {
+          //alert('game over');
+          location.reload();
+        }
         let enemyMove = document.getElementById(
           `1-${player2.attackEnemy(null, gameboard1)}`
         );
         if (enemyMove.innerHTML === 'X') {
           enemyMove.style.backgroundColor = 'red';
+          if (
+            gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
+            gameboard2.gameOver(gameboard1.board) === 'Game over!'
+          ) {
+            //alert('game over');
+            location.reload();
+          }
         } else {
           enemyMove.style.backgroundColor = 'green';
         }
-        gameboard1.gameOver(gameboard2.board);
-        gameboard2.gameOver(gameboard1.board);
       });
     } else {
       listItem2.addEventListener('click', function handler(a) {
@@ -67,11 +79,16 @@ const displayBoards = (gameboard1, gameboard2, player1, player2) => {
         );
         if (enemyMove.innerHTML === 'X') {
           enemyMove.style.backgroundColor = 'red';
+          if (
+            gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
+            gameboard2.gameOver(gameboard1.board) === 'Game over!'
+          ) {
+            //alert('game over');
+            location.reload();
+          }
         } else {
           enemyMove.style.backgroundColor = 'green';
         }
-        gameboard1.gameOver(gameboard2.board);
-        gameboard2.gameOver(gameboard1.board);
       });
     }
 
