@@ -674,41 +674,41 @@ describe('Gameplay', () => {
       },
     ]);
   });
-  test('Places ship on the board', () => {
+  test('Places ships vertically and horizontally', () => {
     global.prompt = jest.fn();
     global.prompt
-      .mockReturnValueOnce('A1')
+      .mockReturnValueOnce('J1')
       .mockReturnValueOnce('vertical')
-      .mockReturnValueOnce('B1')
-      .mockReturnValueOnce('vertical')
+      .mockReturnValueOnce('A7')
+      .mockReturnValueOnce('horizontal')
       .mockReturnValueOnce('C1')
       .mockReturnValueOnce('vertical')
-      .mockReturnValueOnce('D1')
-      .mockReturnValueOnce('vertical')
+      .mockReturnValueOnce('D10')
+      .mockReturnValueOnce('horizontal')
       .mockReturnValueOnce('E1')
       .mockReturnValueOnce('vertical');
     document.body.innerHTML = '<div id=content>' + '</div>';
     const game2 = gameFactory();
     expect(game2.boards).toEqual([
       {
-        A1: 'ship',
+        A1: '',
         A10: '',
-        A2: 'ship',
-        A3: 'ship',
-        A4: 'ship',
-        A5: 'ship',
+        A2: '',
+        A3: '',
+        A4: '',
+        A5: '',
         A6: '',
-        A7: '',
+        A7: 'ship',
         A8: '',
         A9: '',
-        B1: 'ship',
+        B1: '',
         B10: '',
-        B2: 'ship',
-        B3: 'ship',
-        B4: 'ship',
+        B2: '',
+        B3: '',
+        B4: '',
         B5: '',
         B6: '',
-        B7: '',
+        B7: 'ship',
         B8: '',
         B9: '',
         C1: 'ship',
@@ -718,21 +718,21 @@ describe('Gameplay', () => {
         C4: '',
         C5: '',
         C6: '',
-        C7: '',
+        C7: 'ship',
         C8: '',
         C9: '',
-        D1: 'ship',
-        D10: '',
-        D2: 'ship',
-        D3: 'ship',
+        D1: '',
+        D10: 'ship',
+        D2: '',
+        D3: '',
         D4: '',
         D5: '',
         D6: '',
-        D7: '',
+        D7: 'ship',
         D8: '',
         D9: '',
         E1: 'ship',
-        E10: '',
+        E10: 'ship',
         E2: 'ship',
         E3: '',
         E4: '',
@@ -742,7 +742,7 @@ describe('Gameplay', () => {
         E8: '',
         E9: '',
         F1: '',
-        F10: '',
+        F10: 'ship',
         F2: '',
         F3: '',
         F4: '',
@@ -781,12 +781,12 @@ describe('Gameplay', () => {
         I7: '',
         I8: '',
         I9: '',
-        J1: '',
+        J1: 'ship',
         J10: '',
-        J2: '',
-        J3: '',
-        J4: '',
-        J5: '',
+        J2: 'ship',
+        J3: 'ship',
+        J4: 'ship',
+        J5: 'ship',
         J6: '',
         J7: '',
         J8: '',
@@ -896,4 +896,9 @@ describe('Gameplay', () => {
       },
     ]);
   });
+  //account for mistakes in placing ships and redo that section
+
+  //show board in-between each deployment
+
+  //show alert when deployment fails
 });

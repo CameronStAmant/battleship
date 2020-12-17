@@ -140,7 +140,7 @@ const gameboardFactory = () => {
           } else {
             const grabCharCode = coordinate.charCodeAt(0) + shipSection;
             let currentSpot =
-              String.fromCharCode(grabCharCode) + coordinate.charAt(1);
+              String.fromCharCode(grabCharCode) + coordinate.substr(1);
             if (board[currentSpot] === 'ship') {
               return offShipDenial;
             } else {
