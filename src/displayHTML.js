@@ -1,5 +1,6 @@
 const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let content1 = document.getElementById('content');
+  content1.innerHTML = '';
   let header = document.createElement('div');
   header.innerHTML = 'Battleship';
   content1.append(header);
