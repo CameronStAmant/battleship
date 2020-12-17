@@ -16,16 +16,17 @@ const gameFactory = () => {
   // let player1Submarine;
   // // let player1Destroyer;
 
-  gameboard1.deploy(shipFactory('battleship'), 'A2', 'horizontal');
-  gameboard1.deploy(shipFactory('cruiser'), 'A3', 'horizontal');
-  gameboard1.deploy(shipFactory('submarine'), 'A4', 'horizontal');
-  gameboard1.deploy(shipFactory('destroyer'), 'A5', 'horizontal');
+  // gameboard1.deploy(shipFactory('carrier'), 'A1', 'vertical');
+  gameboard1.deploy(shipFactory('battleship'), 'B1', 'vertical');
+  gameboard1.deploy(shipFactory('cruiser'), 'C1', 'vertical');
+  gameboard1.deploy(shipFactory('submarine'), 'D1', 'vertical');
+  gameboard1.deploy(shipFactory('destroyer'), 'E1', 'vertical');
 
-  gameboard2.deploy(shipFactory('carrier'), 'A1', 'vertical');
-  gameboard2.deploy(shipFactory('battleship'), 'B1', 'vertical');
-  gameboard2.deploy(shipFactory('cruiser'), 'C1', 'vertical');
-  gameboard2.deploy(shipFactory('submarine'), 'D1', 'vertical');
-  gameboard2.deploy(shipFactory('destroyer'), 'E1', 'vertical');
+  gameboard2.deploy(shipFactory('carrier'), 'A1', 'horizontal');
+  gameboard2.deploy(shipFactory('battleship'), 'A2', 'horizontal');
+  gameboard2.deploy(shipFactory('cruiser'), 'A3', 'horizontal');
+  gameboard2.deploy(shipFactory('submarine'), 'A4', 'horizontal');
+  gameboard2.deploy(shipFactory('destroyer'), 'A5', 'horizontal');
 
   displayBoards(gameboard1, gameboard2, player1, player2, reset);
 
