@@ -244,7 +244,7 @@ const gameboardFactory = () => {
       arr.push(value);
     }
     if (arr.every((item) => item !== 'ship')) {
-      console.log('GAME OVER');
+      // console.log('GAME OVER');
       alert('GAME OVER'); // tests pass, but look terrible with an alert
       return 'Game over!';
     }
