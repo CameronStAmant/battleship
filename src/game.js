@@ -123,6 +123,12 @@ const gameFactory = () => {
   let destroyer;
   let destroyerDirection;
 
+  gameboard1.deploy(shipFactory('carrier'), 'A1', 'vertical');
+  gameboard1.deploy(shipFactory('battleship'), 'B1', 'vertical');
+  gameboard1.deploy(shipFactory('cruiser'), 'C1', 'vertical');
+  gameboard1.deploy(shipFactory('submarine'), 'D1', 'vertical');
+  gameboard1.deploy(shipFactory('destroyer'), 'E1', 'vertical');
+
   gameboard2.deploy(shipFactory('carrier'), 'A1', 'horizontal');
   gameboard2.deploy(shipFactory('battleship'), 'A2', 'horizontal');
   gameboard2.deploy(shipFactory('cruiser'), 'A3', 'horizontal');
@@ -133,7 +139,6 @@ const gameFactory = () => {
 
   /*
    Beginning of new user input
-   */
 
   const deploy = document.getElementById('deploy1');
   deploy.addEventListener('click', (event) => {
@@ -141,7 +146,6 @@ const gameFactory = () => {
     alert('hello');
   });
 
-  /*
    End of new user input
    */
 

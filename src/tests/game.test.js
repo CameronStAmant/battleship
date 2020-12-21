@@ -2,6 +2,7 @@ const gameFactory = require('../game.js');
 // const displayBoards = require('../displayHTML');
 
 describe('Gameplay', () => {
+  /*
   test('Sets up the game with vertical placements', () => {
     global.prompt = jest.fn();
     global.prompt
@@ -896,9 +897,8 @@ describe('Gameplay', () => {
       },
     ]);
   });
+  */
   //account for mistakes in placing ships and redo that section
-
   //show board in-between each deployment
-
   //show alert when deployment fails
 });

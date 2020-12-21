@@ -12,6 +12,7 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   //
 
   //
+  /*
   let inputModal = document.createElement('form');
 
   let inputShip1Coordinate = document.createElement('input');
@@ -37,19 +38,60 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   inputModal.append(inputShip1Direction);
   inputModal.append(inputShip1DirectionLabel);
   content1.append(inputModal);
-
+*/
   //
 
-  //
+  // START drag and drop
 
-  //
+  const carrier_drag = document.createElement('div');
+  carrier_drag.innerHTML = ['X', 'X', 'X', 'X', 'X'];
+  carrier_drag.id = 'carrier_dragger';
+  carrier_drag.setAttribute('draggable', 'true');
+  body.append(carrier_drag);
+
+  const dragstart_handler = (ev) => {
+    ev.dataTransfer.setData('text/plain', ev.target.id);
+    ev.dataTransfer.effectAllowed = 'move';
+    console.log('picked up');
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const element = document.getElementById('carrier_dragger');
+    element.addEventListener('dragstart', dragstart_handler);
+    console.log('DOMCOntentLoaded');
+  });
+
+  // END drag and drop
+
+  // START drop zone
+
+  const dragover_handler = (ev) => {
+    ev.preventDefault();
+    console.log('dragging');
+    ev.dataTransfer.dropEffect = 'move';
+  };
+
+  const drop_handler = (ev) => {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData('text/plain');
+    ev.target.appendChild(document.getElementById(data));
+    console.log('dropped');
+  };
+
+  // END drop zone
+
   content1.append(body);
   let board1 = document.createElement('div');
   board1.innerHTML = 'Player 1';
-  board1.class = 'playerOneBoard';
+  board1.className = 'playerOneBoard';
+
   body.append(board1);
-  let list = document.createElement('ul');
+  let list = document.createElement('div');
+  list.setAttribute('ondrop', 'drop_handler(event)');
+  list.setAttribute('ondragover', 'dragover_handler(event)');
+  list.id = 'zone1';
   list.className = 'grid-container';
+
   board1.append(list);
 
   for (const [key, value] of Object.entries(gameboard1.board)) {
@@ -66,7 +108,7 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
 
   let board2 = document.createElement('div');
   board2.innerHTML = 'Player 2';
-  board2.class = 'playerTwoBoard';
+  board2.className = 'playerTwoBoard';
   body.append(board2);
   let list2 = document.createElement('ul');
   list2.className = 'grid-container';
