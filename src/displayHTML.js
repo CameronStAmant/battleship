@@ -6,6 +6,43 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   content1.append(header);
   let body = document.createElement('div');
   body.className = 'main';
+
+  //
+
+  //
+
+  //
+  let inputModal = document.createElement('form');
+
+  let inputShip1Coordinate = document.createElement('input');
+  inputShip1Coordinate.setAttribute('type', 'text');
+  inputShip1Coordinate.setAttribute('name', 'Carrier');
+  inputShip1Coordinate.setAttribute('placeholder', 'Carrier');
+
+  let inputShip1Direction = document.createElement('input');
+  inputShip1Direction.setAttribute('type', 'radio');
+  inputShip1Direction.setAttribute('value', 'vertical');
+  inputShip1Direction.setAttribute('name', 'vertical');
+
+  let inputShip1DirectionLabel = document.createElement('label');
+  inputShip1DirectionLabel.innerHTML = 'Vertical';
+
+  let ship1Deploy = document.createElement('button');
+  ship1Deploy.id = 'deploy1';
+  ship1Deploy.innerHTML = 'Deploy';
+
+  inputShip1DirectionLabel.append(ship1Deploy);
+
+  inputModal.append(inputShip1Coordinate);
+  inputModal.append(inputShip1Direction);
+  inputModal.append(inputShip1DirectionLabel);
+  content1.append(inputModal);
+
+  //
+
+  //
+
+  //
   content1.append(body);
   let board1 = document.createElement('div');
   board1.innerHTML = 'Player 1';

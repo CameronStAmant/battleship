@@ -131,6 +131,21 @@ const gameFactory = () => {
 
   displayBoards(gameboard1, gameboard2, player1, player2, reset);
 
+  /*
+   Beginning of new user input
+   */
+
+  const deploy = document.getElementById('deploy1');
+  deploy.addEventListener('click', (event) => {
+    event.preventDefault();
+    alert('hello');
+  });
+
+  /*
+   End of new user input
+   */
+
+  /*
   while (
     !acceptedCoordinates.includes(carrier) &&
     !['vertical', 'horizontal'].includes(carrierDirection)
@@ -195,7 +210,7 @@ const gameFactory = () => {
   }
   gameboard1.deploy(shipFactory('destroyer'), destroyer, destroyerDirection);
   displayBoards(gameboard1, gameboard2, player1, player2, reset);
-
+*/
   /*
   let fleetArray = [carrier, battleship, cruiser, submarine, destroyer];
   let fleetDirection = [
