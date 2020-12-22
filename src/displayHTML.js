@@ -1,3 +1,5 @@
+const shipFactory = require('./ship');
+
 const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
@@ -7,78 +9,21 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let body = document.createElement('div');
   body.className = 'main';
 
-  //
-
-  //
-
-  //
-  /*
-  let inputModal = document.createElement('form');
-
-  let inputShip1Coordinate = document.createElement('input');
-  inputShip1Coordinate.setAttribute('type', 'text');
-  inputShip1Coordinate.setAttribute('name', 'Carrier');
-  inputShip1Coordinate.setAttribute('placeholder', 'Carrier');
-
-  let inputShip1Direction = document.createElement('input');
-  inputShip1Direction.setAttribute('type', 'radio');
-  inputShip1Direction.setAttribute('value', 'vertical');
-  inputShip1Direction.setAttribute('name', 'vertical');
-
-  let inputShip1DirectionLabel = document.createElement('label');
-  inputShip1DirectionLabel.innerHTML = 'Vertical';
-
-  let ship1Deploy = document.createElement('button');
-  ship1Deploy.id = 'deploy1';
-  ship1Deploy.innerHTML = 'Deploy';
-
-  inputShip1DirectionLabel.append(ship1Deploy);
-
-  inputModal.append(inputShip1Coordinate);
-  inputModal.append(inputShip1Direction);
-  inputModal.append(inputShip1DirectionLabel);
-  content1.append(inputModal);
-*/
-  //
-
-  // START drag and drop
-
   const carrier_drag = document.createElement('div');
-  carrier_drag.innerHTML = ['X', 'X', 'X', 'X', 'X'];
-  carrier_drag.id = 'carrier_dragger';
+  carrier_drag.innerHTML = ['X', 'X'];
+  carrier_drag.id = 'destroyer';
   carrier_drag.setAttribute('draggable', 'true');
   body.append(carrier_drag);
 
   const dragstart_handler = (ev) => {
     ev.dataTransfer.setData('text/plain', ev.target.id);
     ev.dataTransfer.effectAllowed = 'move';
-    console.log('picked up');
   };
 
   window.addEventListener('DOMContentLoaded', () => {
-    const element = document.getElementById('carrier_dragger');
+    const element = document.getElementById('destroyer');
     element.addEventListener('dragstart', dragstart_handler);
-    console.log('DOMCOntentLoaded');
   });
-
-  // END drag and drop
-
-  // START drop zone
-
-  const dragover_handler = (ev) => {
-    ev.preventDefault();
-    console.log('dragging');
-    ev.dataTransfer.dropEffect = 'move';
-  };
-
-  const drop_handler = (ev) => {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData('text/plain');
-    ev.target.appendChild(document.getElementById(data));
-    console.log('dropped');
-  };
-
-  // END drop zone
 
   content1.append(body);
   let board1 = document.createElement('div');
@@ -87,8 +32,22 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
 
   body.append(board1);
   let list = document.createElement('div');
-  list.setAttribute('ondrop', 'drop_handler(event)');
-  list.setAttribute('ondragover', 'dragover_handler(event)');
+  list.addEventListener('drop', (ev) => {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData('text/plain');
+    // ev.target.appendChild(document.getElementById(data));
+    console.log(data);
+    gameboard1.deploy(
+      shipFactory(`${data}`),
+      `${ev.toElement.id.substr(2)}`,
+      'horizontal'
+    );
+    displayBoards(gameboard1, gameboard2, player1, player2, reset);
+  });
+  list.addEventListener('dragover', (ev) => {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = 'move';
+  });
   list.id = 'zone1';
   list.className = 'grid-container';
 
@@ -174,7 +133,7 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
 
     list2.append(listItem2);
   }
-  return {};
+  return { gameboard1 };
 };
 
 module.exports = displayBoards;
