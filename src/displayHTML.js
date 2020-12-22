@@ -1,4 +1,5 @@
 const shipFactory = require('./ship');
+const shipyardFactory = require('./shipyardHTML');
 
 const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let content1 = document.getElementById('content');
@@ -6,18 +7,23 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let header = document.createElement('div');
   header.innerHTML = 'Battleship';
   content1.append(header);
-  let body = document.createElement('div');
-  body.className = 'main';
+  let bodyArea = document.createElement('div');
+  bodyArea.className = 'main';
 
-  const carrier_drag = document.createElement('div');
-  carrier_drag.innerHTML = ['X', 'X'];
-  carrier_drag.id = 'destroyer';
-  carrier_drag.setAttribute('draggable', 'true');
-  body.append(carrier_drag);
+  let ships = shipyardFactory();
 
   const dragstart_handler = (ev) => {
     ev.dataTransfer.setData('text/plain', ev.target.id);
     ev.dataTransfer.effectAllowed = 'move';
+
+    let abd = document.createElement('img');
+    abd.src = `/src/images/${ev.path[0].id}Horizontal.jpeg`;
+
+    if (currentRotation === 'vertical') {
+      ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
+    } else if (currentRotation === 'horizontal') {
+      ev.dataTransfer.setDragImage(abd, 10, 10);
+    }
   };
 
   window.addEventListener('DOMContentLoaded', () => {
@@ -25,24 +31,41 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
     element.addEventListener('dragstart', dragstart_handler);
   });
 
-  content1.append(body);
+  content1.append(bodyArea);
   let board1 = document.createElement('div');
   board1.innerHTML = 'Player 1';
   board1.className = 'playerOneBoard';
 
-  body.append(board1);
+  bodyArea.append(board1);
   let list = document.createElement('div');
   list.addEventListener('drop', (ev) => {
     ev.preventDefault();
     const data = ev.dataTransfer.getData('text/plain');
-    // ev.target.appendChild(document.getElementById(data));
-    console.log(data);
-    gameboard1.deploy(
-      shipFactory(`${data}`),
-      `${ev.toElement.id.substr(2)}`,
-      'horizontal'
-    );
-    displayBoards(gameboard1, gameboard2, player1, player2, reset);
+    let deploymentBlueprint;
+    if (currentRotation === 'horizontal') {
+      deploymentBlueprint = gameboard1.deploy(
+        shipFactory(`${data}`),
+        `${ev.toElement.id.substr(2)}`,
+        'horizontal'
+      );
+    } else if (currentRotation === 'vertical') {
+      deploymentBlueprint = gameboard1.deploy(
+        shipFactory(`${data}`),
+        `${ev.toElement.id.substr(2)}`,
+        'vertical'
+      );
+    }
+    if (
+      deploymentBlueprint === 'Your deployment would go off the board' ||
+      deploymentBlueprint === 'You cannot deploy on another ship.'
+    ) {
+      console.log('not deployed');
+      return;
+    } else {
+      console.log('deployed');
+      displayBoards(gameboard1, gameboard2, player1, player2, reset);
+      ev.target.appendChild(document.getElementById(data));
+    }
   });
   list.addEventListener('dragover', (ev) => {
     ev.preventDefault();
@@ -52,6 +75,45 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   list.className = 'grid-container';
 
   board1.append(list);
+
+  let shipyard = document.createElement('div');
+  shipyard.id = 'shipyard';
+  board1.append(shipyard);
+
+  let currentRotation = 'vertical';
+  let rotate = document.createElement('button');
+
+  rotate.innerHTML = 'rotate';
+  shipyard.append(rotate);
+  shipyard.append(ships.carrier);
+  shipyard.append(ships.battleship);
+  shipyard.append(ships.cruiser);
+  shipyard.append(ships.submarine);
+  shipyard.append(ships.destroyer);
+
+  rotate.addEventListener('click', function rotateActivate() {
+    let shipsInShipyard = document.getElementsByClassName('rotateMe');
+
+    if (currentRotation === 'horizontal') {
+      for (let i = 0; i < shipsInShipyard.length; i++) {
+        shipsInShipyard[
+          i
+        ].src = `/src/images/${shipsInShipyard[i].id}Vertical.jpeg`;
+        shipsInShipyard[i].height = '100';
+      }
+      currentRotation = 'vertical';
+    } else if (currentRotation === 'vertical') {
+      for (let i = 0; i < shipsInShipyard.length; i++) {
+        shipsInShipyard[
+          i
+        ].src = `/src/images/${shipsInShipyard[i].id}Horizontal.jpeg`;
+        shipsInShipyard[i].height = '50';
+      }
+      currentRotation = 'horizontal';
+    }
+  });
+
+  //
 
   for (const [key, value] of Object.entries(gameboard1.board)) {
     let listItem = document.createElement('div');
@@ -68,7 +130,7 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   let board2 = document.createElement('div');
   board2.innerHTML = 'Player 2';
   board2.className = 'playerTwoBoard';
-  body.append(board2);
+  bodyArea.append(board2);
   let list2 = document.createElement('ul');
   list2.className = 'grid-container';
   board2.appendChild(list2);
@@ -77,7 +139,7 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
     let listItem2 = document.createElement('div');
     listItem2.id = `2-${key}`;
     listItem2.className = 'grid-item';
-    //
+
     if (value === 'ship') {
       listItem2.addEventListener('click', function handler(a) {
         a.currentTarget.removeEventListener(a.type, handler);
