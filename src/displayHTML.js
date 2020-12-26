@@ -10,6 +10,7 @@ const displayBoards = (
   rotation = null,
   remainingDeployments = null
 ) => {
+  console.log(remainingDeployments);
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
   let header = document.createElement('div');
@@ -93,6 +94,7 @@ const displayBoards = (
         newShipyard
       );
       // ev.target.appendChild(document.getElementById(data));
+      console.log(newShipyard);
     }
   });
   list.addEventListener('dragover', (ev) => {
@@ -159,7 +161,11 @@ const displayBoards = (
   let board2 = document.createElement('div');
   board2.innerHTML = 'Player 2';
   board2.className = 'playerTwoBoard';
-  bodyArea.append(board2);
+  if (remainingDeployments !== null) {
+    if (remainingDeployments.length === 0) {
+      bodyArea.append(board2);
+    }
+  }
   let list2 = document.createElement('ul');
   list2.className = 'grid-container';
   board2.appendChild(list2);

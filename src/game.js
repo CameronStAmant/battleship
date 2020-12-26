@@ -25,8 +25,6 @@ const gameFactory = () => {
 
   displayBoards(gameboard1, gameboard2, player1, player2, reset);
 
-  displayBoards(gameboard1, gameboard2, player1, player2, reset);
-
   return { boards, player1, player2, gameboard1, gameboard2 };
 };
 
