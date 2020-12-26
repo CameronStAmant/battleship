@@ -1,6 +1,6 @@
 const shipyardFactory = () => {
   const carrier = document.createElement('img');
-  carrier.src = 'images/battleshipVertical.jpeg';
+  carrier.src = 'images/carrierVertical.jpeg';
   carrier.height = '250';
   carrier.id = 'carrier';
   carrier.className = 'rotateMe';
