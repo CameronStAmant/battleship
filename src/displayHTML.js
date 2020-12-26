@@ -1,7 +1,15 @@
 const shipFactory = require('./ship');
 const shipyardFactory = require('./shipyardHTML');
 
-const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
+const displayBoards = (
+  gameboard1,
+  gameboard2,
+  player1,
+  player2,
+  reset,
+  rotation,
+  remainingDeployments = null
+) => {
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
   let header = document.createElement('div');
@@ -12,35 +20,60 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
 
   let ships = shipyardFactory();
 
+  let awaitingDeployment = [];
+  if (remainingDeployments === null) {
+    awaitingDeployment = [
+      ships.carrier,
+      ships.battleship,
+      ships.cruiser,
+      ships.submarine,
+      ships.destroyer,
+    ];
+  } else {
+    awaitingDeployment = remainingDeployments;
+  }
+
   const dragstart_handler = (ev) => {
     ev.dataTransfer.setData('text/plain', ev.target.id);
     ev.dataTransfer.effectAllowed = 'move';
-
-    let abd = document.createElement('img');
-    abd.src = `/src/images/${ev.path[0].id}Horizontal.jpeg`;
+    console.log(`In the dragstart: ${ev.path[0]}`);
 
     if (currentRotation === 'vertical') {
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     } else if (currentRotation === 'horizontal') {
+      let abd = document.createElement('img');
+      abd.src = `/src/images/${ev.path[0].id}Horizontal.jpeg`;
       ev.dataTransfer.setDragImage(abd, 10, 10);
     }
   };
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const element = document.getElementById('destroyer');
-    element.addEventListener('dragstart', dragstart_handler);
-  });
+  // window.addEventListener('DOMContentLoaded', () => {
+  // const element1 = document.getElementById('carrier');
+  // element1.addEventListener('dragstart', dragstart_handler);
+  // const element2 = document.getElementById('battleship');
+  // element2.addEventListener('dragstart', dragstart_handler);
+  // const element3 = document.getElementById('cruiser');
+  // element3.addEventListener('dragstart', dragstart_handler);
+  // const element4 = document.getElementById('submarine');
+  // element4.addEventListener('dragstart', dragstart_handler);
+  // const element5 = document.getElementById('destroyer');
+  // element5.addEventListener('dragstart', dragstart_handler);
+  // });
 
   content1.append(bodyArea);
   let board1 = document.createElement('div');
   board1.innerHTML = 'Player 1';
   board1.className = 'playerOneBoard';
 
+  // things break after 1 ship is already deployed and another is trying to be deployed.
+
   bodyArea.append(board1);
   let list = document.createElement('div');
   list.addEventListener('drop', (ev) => {
     ev.preventDefault();
     const data = ev.dataTransfer.getData('text/plain');
+    console.log(`ships id: ${ev}`);
+    console.log(`ships id: ${data}`);
     let deploymentBlueprint;
     if (currentRotation === 'horizontal') {
       deploymentBlueprint = gameboard1.deploy(
@@ -63,7 +96,24 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
       return;
     } else {
       console.log('deployed');
-      displayBoards(gameboard1, gameboard2, player1, player2, reset);
+      // console.log(awaitingDeployment.indexOf(`ship.${data}`));
+      // console.log(awaitingDeployment);
+      let newShipyard = [];
+      for (let i = 0; i < awaitingDeployment.length; i++) {
+        if (awaitingDeployment[i].id === data) {
+        } else {
+          newShipyard.push(awaitingDeployment[i]);
+        }
+      }
+      displayBoards(
+        gameboard1,
+        gameboard2,
+        player1,
+        player2,
+        reset,
+        currentRotation
+        newShipyard
+      );
       ev.target.appendChild(document.getElementById(data));
     }
   });
@@ -80,16 +130,19 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
   shipyard.id = 'shipyard';
   board1.append(shipyard);
 
-  let currentRotation = 'vertical';
+  let currentRotation;
+  if (rotation === null || rotation === 'vertical') {
+    currentRotation = 'vertical'
+  } else {
+    currentRotation = 'horizontal'
+  }
   let rotate = document.createElement('button');
 
-  rotate.innerHTML = 'rotate';
   shipyard.append(rotate);
-  shipyard.append(ships.carrier);
-  shipyard.append(ships.battleship);
-  shipyard.append(ships.cruiser);
-  shipyard.append(ships.submarine);
-  shipyard.append(ships.destroyer);
+  rotate.innerHTML = 'rotate';
+  for (let i = 0; i < awaitingDeployment.length; i++) {
+    shipyard.append(awaitingDeployment[i]);
+  }
 
   rotate.addEventListener('click', function rotateActivate() {
     let shipsInShipyard = document.getElementsByClassName('rotateMe');
@@ -112,8 +165,6 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
       currentRotation = 'horizontal';
     }
   });
-
-  //
 
   for (const [key, value] of Object.entries(gameboard1.board)) {
     let listItem = document.createElement('div');
@@ -195,6 +246,17 @@ const displayBoards = (gameboard1, gameboard2, player1, player2, reset) => {
 
     list2.append(listItem2);
   }
+
+  const element1 = document.getElementById('carrier');
+  element1.addEventListener('dragstart', dragstart_handler);
+  const element2 = document.getElementById('battleship');
+  element2.addEventListener('dragstart', dragstart_handler);
+  const element3 = document.getElementById('cruiser');
+  element3.addEventListener('dragstart', dragstart_handler);
+  const element4 = document.getElementById('submarine');
+  element4.addEventListener('dragstart', dragstart_handler);
+  const element5 = document.getElementById('destroyer');
+  element5.addEventListener('dragstart', dragstart_handler);
   return { gameboard1 };
 };
 
