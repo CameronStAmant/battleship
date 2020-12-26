@@ -253,7 +253,6 @@ const gameboardFactory = () => {
 
   const gameOver = (enemyBoard, player) => {
     let arr = [];
-    console.log(enemyBoard);
     for (const [key, value] of Object.entries(enemyBoard)) {
       arr.push(value);
     }
