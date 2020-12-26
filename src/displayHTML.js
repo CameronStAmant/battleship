@@ -7,7 +7,7 @@ const displayBoards = (
   player1,
   player2,
   reset,
-  rotation,
+  rotation = null,
   remainingDeployments = null
 ) => {
   let content1 = document.getElementById('content');
@@ -36,7 +36,6 @@ const displayBoards = (
   const dragstart_handler = (ev) => {
     ev.dataTransfer.setData('text/plain', ev.target.id);
     ev.dataTransfer.effectAllowed = 'move';
-    console.log(`In the dragstart: ${ev.path[0]}`);
 
     if (currentRotation === 'vertical') {
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
@@ -47,33 +46,16 @@ const displayBoards = (
     }
   };
 
-  // window.addEventListener('DOMContentLoaded', () => {
-  // const element1 = document.getElementById('carrier');
-  // element1.addEventListener('dragstart', dragstart_handler);
-  // const element2 = document.getElementById('battleship');
-  // element2.addEventListener('dragstart', dragstart_handler);
-  // const element3 = document.getElementById('cruiser');
-  // element3.addEventListener('dragstart', dragstart_handler);
-  // const element4 = document.getElementById('submarine');
-  // element4.addEventListener('dragstart', dragstart_handler);
-  // const element5 = document.getElementById('destroyer');
-  // element5.addEventListener('dragstart', dragstart_handler);
-  // });
-
   content1.append(bodyArea);
   let board1 = document.createElement('div');
   board1.innerHTML = 'Player 1';
   board1.className = 'playerOneBoard';
-
-  // things break after 1 ship is already deployed and another is trying to be deployed.
 
   bodyArea.append(board1);
   let list = document.createElement('div');
   list.addEventListener('drop', (ev) => {
     ev.preventDefault();
     const data = ev.dataTransfer.getData('text/plain');
-    console.log(`ships id: ${ev}`);
-    console.log(`ships id: ${data}`);
     let deploymentBlueprint;
     if (currentRotation === 'horizontal') {
       deploymentBlueprint = gameboard1.deploy(
@@ -92,12 +74,8 @@ const displayBoards = (
       deploymentBlueprint === 'Your deployment would go off the board' ||
       deploymentBlueprint === 'You cannot deploy on another ship.'
     ) {
-      console.log('not deployed');
       return;
     } else {
-      console.log('deployed');
-      // console.log(awaitingDeployment.indexOf(`ship.${data}`));
-      // console.log(awaitingDeployment);
       let newShipyard = [];
       for (let i = 0; i < awaitingDeployment.length; i++) {
         if (awaitingDeployment[i].id === data) {
@@ -111,10 +89,10 @@ const displayBoards = (
         player1,
         player2,
         reset,
-        currentRotation
+        currentRotation,
         newShipyard
       );
-      ev.target.appendChild(document.getElementById(data));
+      // ev.target.appendChild(document.getElementById(data));
     }
   });
   list.addEventListener('dragover', (ev) => {
@@ -132,9 +110,9 @@ const displayBoards = (
 
   let currentRotation;
   if (rotation === null || rotation === 'vertical') {
-    currentRotation = 'vertical'
+    currentRotation = 'vertical';
   } else {
-    currentRotation = 'horizontal'
+    currentRotation = 'horizontal';
   }
   let rotate = document.createElement('button');
 
@@ -201,7 +179,6 @@ const displayBoards = (
           gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
           gameboard2.gameOver(gameboard1.board) === 'Game over!'
         ) {
-          //alert('game over');
           location.reload();
         }
         let enemyMove = document.getElementById(
@@ -213,7 +190,6 @@ const displayBoards = (
             gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
             gameboard2.gameOver(gameboard1.board) === 'Game over!'
           ) {
-            //alert('game over');
             location.reload();
           }
         } else {
@@ -235,7 +211,6 @@ const displayBoards = (
             gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
             gameboard2.gameOver(gameboard1.board) === 'Game over!'
           ) {
-            //alert('game over');
             location.reload();
           }
         } else {
@@ -248,15 +223,25 @@ const displayBoards = (
   }
 
   const element1 = document.getElementById('carrier');
-  element1.addEventListener('dragstart', dragstart_handler);
+  if (element1 !== null) {
+    element1.addEventListener('dragstart', dragstart_handler);
+  }
   const element2 = document.getElementById('battleship');
-  element2.addEventListener('dragstart', dragstart_handler);
+  if (element2 !== null) {
+    element2.addEventListener('dragstart', dragstart_handler);
+  }
   const element3 = document.getElementById('cruiser');
-  element3.addEventListener('dragstart', dragstart_handler);
+  if (element3 !== null) {
+    element3.addEventListener('dragstart', dragstart_handler);
+  }
   const element4 = document.getElementById('submarine');
-  element4.addEventListener('dragstart', dragstart_handler);
+  if (element4 !== null) {
+    element4.addEventListener('dragstart', dragstart_handler);
+  }
   const element5 = document.getElementById('destroyer');
-  element5.addEventListener('dragstart', dragstart_handler);
+  if (element5 !== null) {
+    element5.addEventListener('dragstart', dragstart_handler);
+  }
   return { gameboard1 };
 };
 
