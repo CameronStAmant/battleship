@@ -9,9 +9,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(jpeg|)$/,
-        use: {
-          loader: 'url-loader',
+        test: /\.(jpeg)$/i,
+        type: 'asset/resource'
         },
       },
     ],
