@@ -2,7 +2,6 @@ const gameboardFactory = require('../gameboard.js');
 const shipFactory = require('../ship.js');
 let gameboard;
 
-let ship1;
 beforeEach(() => {
   ship1 = shipFactory('cruiser');
   ship2 = shipFactory('battleship');
