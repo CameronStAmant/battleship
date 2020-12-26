@@ -1,4 +1,4 @@
-import CarrierVertical from '.images/carrierVertical.jpeg';
+import CarrierVertical from './images/carrierVertical.jpeg';
 
 const shipyardFactory = () => {
   const carrier = document.createElement('img');
