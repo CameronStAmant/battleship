@@ -10,7 +10,6 @@ const displayBoards = (
   rotation = null,
   remainingDeployments = null
 ) => {
-  console.log(remainingDeployments);
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
   let header = document.createElement('div');
@@ -41,9 +40,8 @@ const displayBoards = (
     if (currentRotation === 'vertical') {
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     } else if (currentRotation === 'horizontal') {
-      let abd = document.createElement('img');
-      abd.src = `/src/images/${ev.path[0].id}Horizontal.jpeg`;
-      ev.dataTransfer.setDragImage(abd, 10, 10);
+      ev.path[0].src = `/src/images/${ev.path[0].id}Horizontal.jpeg`;
+      ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     }
   };
 
@@ -94,7 +92,6 @@ const displayBoards = (
         newShipyard
       );
       // ev.target.appendChild(document.getElementById(data));
-      console.log(newShipyard);
     }
   });
   list.addEventListener('dragover', (ev) => {
@@ -119,28 +116,66 @@ const displayBoards = (
   let rotate = document.createElement('button');
 
   shipyard.append(rotate);
+  const emptyLine = document.createElement('p');
+  shipyard.append(emptyLine);
+  const shipsDiv = document.createElement('div');
+  shipsDiv.id = 'shipsDiv';
+  shipyard.append(shipsDiv);
   rotate.innerHTML = 'rotate';
   for (let i = 0; i < awaitingDeployment.length; i++) {
-    shipyard.append(awaitingDeployment[i]);
+    if (currentRotation === 'horizontal') {
+      const linebreak = document.createElement('br');
+      shipsDiv.append(linebreak);
+      shipsDiv.append(awaitingDeployment[i]);
+    } else {
+      shipsDiv.append(awaitingDeployment[i]);
+    }
   }
 
   rotate.addEventListener('click', function rotateActivate() {
     let shipsInShipyard = document.getElementsByClassName('rotateMe');
 
     if (currentRotation === 'horizontal') {
+      shipsDiv.innerHTML = '';
+      for (let i = 0; i < awaitingDeployment.length; i++) {
+        shipsDiv.append(awaitingDeployment[i]);
+      }
       for (let i = 0; i < shipsInShipyard.length; i++) {
         shipsInShipyard[
           i
         ].src = `/src/images/${shipsInShipyard[i].id}Vertical.jpeg`;
-        shipsInShipyard[i].height = '100';
+        switch (shipsInShipyard[i].id) {
+          case 'carrier':
+            shipsInShipyard[i].height = '250';
+            break;
+          case 'battleship':
+            shipsInShipyard[i].height = '200';
+            break;
+          case 'cruiser':
+            shipsInShipyard[i].height = '150';
+            break;
+          case 'submarine':
+            shipsInShipyard[i].height = '150';
+            break;
+          case 'destroyer':
+            shipsInShipyard[i].height = '100';
+            break;
+        }
       }
       currentRotation = 'vertical';
     } else if (currentRotation === 'vertical') {
+      shipsDiv.innerHTML = '';
+      for (let i = 0; i < awaitingDeployment.length; i++) {
+        const linebreak = document.createElement('br');
+        shipsDiv.append(linebreak);
+        shipsDiv.append(awaitingDeployment[i]);
+      }
       for (let i = 0; i < shipsInShipyard.length; i++) {
         shipsInShipyard[
           i
         ].src = `/src/images/${shipsInShipyard[i].id}Horizontal.jpeg`;
         shipsInShipyard[i].height = '50';
+        shipsInShipyard[i].addEventListener('dragstart', dragstart_handler);
       }
       currentRotation = 'horizontal';
     }
