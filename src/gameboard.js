@@ -183,11 +183,7 @@ const gameboardFactory = () => {
   };
 
   const receiveAttack = (coordinate, computer = false) => {
-    if (computer === false) {
-      // console.log(board[coordinate]);
-    }
     if (board[coordinate] === 'ship') {
-      // console.log('here');
       for (let specificBoat = 0; specificBoat < fleet.length; specificBoat++) {
         for (
           let shipSection = 0;
@@ -204,14 +200,10 @@ const gameboardFactory = () => {
               for (const [key, value] of Object.entries(board)) {
                 arr.push(value);
               }
-              // console.log(arr);
               if (arr.every((item) => item !== 'ship')) {
-                // console.log('game over immenent');
                 return coordinate;
               } else {
-                // console.log('sunk!');
-                // console.log(`coorddinate: ${coordinate}`);
-                if ((computer = true)) {
+                if (computer === true) {
                   return coordinate;
                 } else {
                   return 'sunk';
@@ -219,7 +211,7 @@ const gameboardFactory = () => {
               }
             } else {
               board[coordinate] = 'hit';
-              if ((computer = true)) {
+              if (computer === true) {
                 return coordinate;
               } else {
                 return 'Hit!';
@@ -230,7 +222,7 @@ const gameboardFactory = () => {
       }
     } else {
       board[coordinate] = 'miss';
-      if ((computer = true)) {
+      if (computer === true) {
         return coordinate;
       } else {
         return 'Miss!';
@@ -244,8 +236,7 @@ const gameboardFactory = () => {
       arr.push(value);
     }
     if (arr.every((item) => item !== 'ship')) {
-      // console.log('GAME OVER');
-      alert('GAME OVER'); // tests pass, but look terrible with an alert
+      alert('GAME OVER');
       return 'Game over!';
     }
   };
