@@ -40,7 +40,7 @@ const displayBoards = (
     if (currentRotation === 'vertical') {
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     } else if (currentRotation === 'horizontal') {
-      ev.path[0].src = `/src/images/${ev.path[0].id}Horizontal.jpeg`;
+      ev.path[0].src = `images/${ev.path[0].id}Horizontal.jpeg`;
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     }
   };
@@ -140,9 +140,7 @@ const displayBoards = (
         shipsDiv.append(awaitingDeployment[i]);
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
-        shipsInShipyard[
-          i
-        ].src = `/src/images/${shipsInShipyard[i].id}Vertical.jpeg`;
+        shipsInShipyard[i].src = `images/${shipsInShipyard[i].id}Vertical.jpeg`;
         switch (shipsInShipyard[i].id) {
           case 'carrier':
             shipsInShipyard[i].height = '250';
@@ -172,7 +170,7 @@ const displayBoards = (
       for (let i = 0; i < shipsInShipyard.length; i++) {
         shipsInShipyard[
           i
-        ].src = `/src/images/${shipsInShipyard[i].id}Horizontal.jpeg`;
+        ].src = `images/${shipsInShipyard[i].id}Horizontal.jpeg`;
         shipsInShipyard[i].height = '50';
         shipsInShipyard[i].addEventListener('dragstart', dragstart_handler);
       }
