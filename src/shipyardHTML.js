@@ -1,6 +1,8 @@
+import CarrierVertical from '.images/carrierVertical.jpeg';
+
 const shipyardFactory = () => {
   const carrier = document.createElement('img');
-  carrier.src = '/src/images/carrierVertical.jpeg';
+  carrier.src = CarrierVertical;
   carrier.height = '250';
   carrier.id = 'carrier';
   carrier.className = 'rotateMe';
