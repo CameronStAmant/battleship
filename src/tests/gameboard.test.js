@@ -465,23 +465,6 @@ describe('horizontal tests', () => {
   });
 });
 
-// describe('receiveAttack tests', () => {
-//   test('Attack is a hit', () => {
-//     gameboard.deploy(shipFactory('battleship'), 'F5', 'vertical');
-//     expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
-//   });
-
-//   test('successful attack knows which ship was hit', () => {
-//     gameboard.deploy(shipFactory('battleship'), 'F5', 'vertical');
-//     expect(gameboard.receiveAttack('F7')).toEqual('Hit!');
-//   });
-
-//   test('Attack is a miss', () => {
-//     gameboard.deploy(shipFactory('battleship'), 'F5', 'vertical');
-//     expect(gameboard.receiveAttack('C7')).toEqual('Miss!');
-//   });
-// });
-
 describe('Each ship registers correctly', () => {
   test('carrier ships', () => {
     gameboard.deploy(shipFactory('carrier'));

@@ -102,7 +102,7 @@ const gameboardFactory = () => {
     I10: '',
     J10: '',
   };
-
+  let directionOptions = ['vertical', 'horizontal'];
   const denyDeployment = (denialReason) => {
     switch (denialReason) {
       case 'offBoard':
@@ -117,69 +117,90 @@ const gameboardFactory = () => {
     const offBoardDenial = denyDeployment('offBoard');
     const offShipDenial = denyDeployment('onShip');
 
-    if (direction === 'horizontal') {
-      const endOfBoard = 'J';
-      if (
-        ship.shipSize.length - 1 + coordinate.charCodeAt(0) >
-        endOfBoard.charCodeAt(0)
-      ) {
-        return offBoardDenial;
-      } else {
-        for (
-          let shipSection = 0;
-          shipSection < ship.shipSize.length;
-          shipSection++
+    if (coordinate === 'computer' && direction === 'computer') {
+      let randomCoordinate = (obj) => {
+        let keys = Object.keys(obj);
+        return keys[Math.floor(Math.random() * keys.length)];
+      };
+
+      let isDeployed = false;
+      while (isDeployed === false) {
+        let randomDirection =
+          directionOptions[Math.floor(Math.random() * directionOptions.length)];
+        let randomCoordinateChoice = randomCoordinate(board);
+        let outcome = deploy(ship, randomCoordinateChoice, randomDirection);
+        if (
+          outcome !== 'Your deployment would go off the board' &&
+          outcome !== 'You cannot deploy on another ship.'
         ) {
-          if (shipSection === 0) {
-            if (board[coordinate] === 'ship') {
-              return offShipDenial;
+          isDeployed = true;
+        }
+      }
+    } else {
+      if (direction === 'horizontal') {
+        const endOfBoard = 'J';
+        if (
+          ship.shipSize.length - 1 + coordinate.charCodeAt(0) >
+          endOfBoard.charCodeAt(0)
+        ) {
+          return offBoardDenial;
+        } else {
+          for (
+            let shipSection = 0;
+            shipSection < ship.shipSize.length;
+            shipSection++
+          ) {
+            if (shipSection === 0) {
+              if (board[coordinate] === 'ship') {
+                return offShipDenial;
+              } else {
+                deployLocations.push(coordinate);
+                ship.shipSize[shipSection] = coordinate;
+              }
             } else {
-              deployLocations.push(coordinate);
-              ship.shipSize[shipSection] = coordinate;
+              const grabCharCode = coordinate.charCodeAt(0) + shipSection;
+              let currentSpot =
+                String.fromCharCode(grabCharCode) + coordinate.substr(1);
+              if (board[currentSpot] === 'ship') {
+                return offShipDenial;
+              } else {
+                deployLocations.push(currentSpot);
+                ship.shipSize[shipSection] = currentSpot;
+              }
             }
-          } else {
-            const grabCharCode = coordinate.charCodeAt(0) + shipSection;
+          }
+        }
+      } else if (direction === 'vertical') {
+        if (ship.shipSize.length - 1 + parseInt(coordinate.substring(1)) > 10) {
+          return offBoardDenial;
+        } else {
+          for (let i = 0; i < ship.shipSize.length; i++) {
             let currentSpot =
-              String.fromCharCode(grabCharCode) + coordinate.substr(1);
-            if (board[currentSpot] === 'ship') {
-              return offShipDenial;
+              coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i);
+            if (i === 0) {
+              if (board[coordinate] === 'ship') {
+                return offShipDenial;
+              } else {
+                deployLocations.push(coordinate);
+                ship.shipSize[i] = coordinate;
+              }
             } else {
-              deployLocations.push(currentSpot);
-              ship.shipSize[shipSection] = currentSpot;
+              if (board[currentSpot] === 'ship') {
+                return offShipDenial;
+              } else {
+                deployLocations.push(currentSpot);
+                ship.shipSize[i] = currentSpot;
+              }
             }
           }
         }
       }
-    } else if (direction === 'vertical') {
-      if (ship.shipSize.length - 1 + parseInt(coordinate.substring(1)) > 10) {
-        return offBoardDenial;
-      } else {
-        for (let i = 0; i < ship.shipSize.length; i++) {
-          let currentSpot =
-            coordinate.charAt(0) + (parseInt(coordinate.charAt(1)) + i);
-          if (i === 0) {
-            if (board[coordinate] === 'ship') {
-              return offShipDenial;
-            } else {
-              deployLocations.push(coordinate);
-              ship.shipSize[i] = coordinate;
-            }
-          } else {
-            if (board[currentSpot] === 'ship') {
-              return offShipDenial;
-            } else {
-              deployLocations.push(currentSpot);
-              ship.shipSize[i] = currentSpot;
-            }
-          }
-        }
+      for (let j = 0; j < deployLocations.length; j++) {
+        board[deployLocations[j]] = 'ship';
       }
+      fleet.push(ship);
+      return board;
     }
-    for (let j = 0; j < deployLocations.length; j++) {
-      board[deployLocations[j]] = 'ship';
-    }
-    fleet.push(ship);
-    return board;
   };
 
   const receiveAttack = (coordinate, computer = false) => {
@@ -230,13 +251,14 @@ const gameboardFactory = () => {
     }
   };
 
-  const gameOver = (enemyBoard) => {
+  const gameOver = (enemyBoard, player) => {
     let arr = [];
-    for (const [key, value] of Object.entries(board)) {
+    console.log(enemyBoard);
+    for (const [key, value] of Object.entries(enemyBoard)) {
       arr.push(value);
     }
     if (arr.every((item) => item !== 'ship')) {
-      alert('GAME OVER');
+      alert(`${player} wins!`);
       return 'Game over!';
     }
   };

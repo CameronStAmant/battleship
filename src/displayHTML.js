@@ -91,7 +91,6 @@ const displayBoards = (
         currentRotation,
         newShipyard
       );
-      // ev.target.appendChild(document.getElementById(data));
     }
   });
   list.addEventListener('dragover', (ev) => {
@@ -217,8 +216,9 @@ const displayBoards = (
         listItem2.style.backgroundColor = 'red';
         player1.attackEnemy(listItem2.id.substr(2), gameboard2);
         if (
-          gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
-          gameboard2.gameOver(gameboard1.board) === 'Game over!'
+          gameboard1.gameOver(gameboard2.board, 'Player 1') === 'Game over!' ||
+          gameboard2.gameOver(gameboard1.board, 'Computer player') ===
+            'Game over!'
         ) {
           location.reload();
         }
@@ -228,8 +228,10 @@ const displayBoards = (
         if (enemyMove.innerHTML === 'X') {
           enemyMove.style.backgroundColor = 'red';
           if (
-            gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
-            gameboard2.gameOver(gameboard1.board) === 'Game over!'
+            gameboard1.gameOver(gameboard2.board, 'Player 1') ===
+              'Game over!' ||
+            gameboard2.gameOver(gameboard1.board, 'Computer player') ===
+              'Game over!'
           ) {
             location.reload();
           }
