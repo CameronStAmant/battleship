@@ -1,3 +1,19 @@
 # Battleship
 
-This is a recreation of the board game battleship. It was built using Jest and TDD. In it you can use drag and drop to deploy your ships. It was built using webpack and vanilla JS. The boards know when ships have been hit and report that visually on the coordinates. Once all ships of either board have been sunk, the game is over and a winner is reported.
+A recreation of the board game battleship.
+
+<p align="center">
+    <img src="./battleship.png" alt="battleship website" />
+</p>
+
+## Features
+
+- TDD with Jest.
+- Drag and drop ships for deployment.
+- Rotate ships for deployment.
+- Play against computer player.
+- Visual indications of hit or miss.
+
+## Demo
+
+- https://github.com/CameronStAmant/battleship.git
