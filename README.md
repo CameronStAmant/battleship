@@ -16,4 +16,4 @@ A recreation of the board game battleship.
 
 ## Demo
 
-- https://github.com/CameronStAmant/battleship.git
+- https://cameronstamant.github.io/battleship/
