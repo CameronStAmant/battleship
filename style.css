@@ -2,6 +2,8 @@
   width: 500px;
   height: 500px;
   display: grid;
+  margin: 0;
+  padding: 10px;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
 }
@@ -15,19 +17,3 @@
 .main {
   display: flex;
 }
-/* 
-#carrier_dragger {
-  width: 500px;
-  height: 500px;
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-} */
-
-/* .rotatableHorizontal {
-  transform: rotate(90deg);
-}
-
-.rotatableVertical {
-  transform: rotate(0deg);
-} */
