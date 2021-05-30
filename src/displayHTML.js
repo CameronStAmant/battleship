@@ -12,9 +12,9 @@ const displayBoards = (
 ) => {
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
-  let header = document.createElement('div');
-  header.innerHTML = 'Battleship';
-  content1.append(header);
+  // let header = document.createElement('div');
+  // header.innerHTML = 'Battleship';
+  // content1.append(header);
   let bodyArea = document.createElement('div');
   bodyArea.className = 'main';
 
