@@ -239,6 +239,7 @@ const displayBoards = (
   board2.className = 'playerTwoBoard';
   if (remainingDeployments !== null) {
     if (remainingDeployments.length === 0) {
+      rotate.className = 'hide';
       bodyArea.append(board2);
     }
   }
