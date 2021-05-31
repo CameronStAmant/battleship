@@ -17,3 +17,25 @@
 .main {
   display: flex;
 }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .grid-container {
+    width: 100vw;
+    height: 500px;
+    display: grid;
+    margin: 0;
+    padding: 10px;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  .grid-item {
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+  }
+
+  .main {
+    display: flex;
+  }
+}

@@ -12,9 +12,6 @@ const displayBoards = (
 ) => {
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
-  // let header = document.createElement('div');
-  // header.innerHTML = 'Battleship';
-  // content1.append(header);
   let bodyArea = document.createElement('div');
   bodyArea.className = 'main';
 
@@ -32,6 +29,89 @@ const displayBoards = (
   } else {
     awaitingDeployment = remainingDeployments;
   }
+
+  let touchedShip;
+  let touchedLocation;
+  const shipOptions = [
+    'carrier',
+    'battleship',
+    'cruiser',
+    'submarine',
+    'destroyer',
+  ];
+
+  const deploying = (location, data) => {
+    let deploymentBlueprint;
+
+    if (currentRotation === 'horizontal') {
+      deploymentBlueprint = gameboard1.deploy(
+        shipFactory(`${data}`),
+        `${location.substr(2)}`,
+        'horizontal'
+      );
+    } else if (currentRotation === 'vertical') {
+      deploymentBlueprint = gameboard1.deploy(
+        shipFactory(`${data}`),
+        `${location.substr(2)}`,
+        'vertical'
+      );
+    }
+    if (
+      deploymentBlueprint === 'Your deployment would go off the board' ||
+      deploymentBlueprint === 'You cannot deploy on another ship.'
+    ) {
+      if (deploymentBlueprint === 'Your deployment would go off the board') {
+        warningMessageOffBoard();
+      } else if (deploymentBlueprint === 'You cannot deploy on another ship.') {
+        warningMessageOnShip();
+      }
+      return;
+    } else {
+      let newShipyard = [];
+      for (let i = 0; i < awaitingDeployment.length; i++) {
+        if (awaitingDeployment[i].id === data) {
+        } else {
+          newShipyard.push(awaitingDeployment[i]);
+        }
+      }
+      displayBoards(
+        gameboard1,
+        gameboard2,
+        player1,
+        player2,
+        reset,
+        currentRotation,
+        newShipyard
+      );
+    }
+  };
+
+  const warningMessageOffBoard = () => {
+    alert('Your deployment would go off the board.');
+  };
+
+  const warningMessageOnShip = () => {
+    alert('You cannot deploy on another ship.');
+  };
+
+  const startHandler = (e) => {
+    if (!touchedShip && shipOptions.includes(e.target.id)) {
+      touchedShip = e.target.id;
+    } else if (
+      touchedShip &&
+      !touchedLocation &&
+      e.target.id.match(/\d\-[A-Z]\d/)
+    ) {
+      touchedLocation = e.target.id;
+      deploying(touchedLocation, touchedShip);
+    } else {
+      if (touchedShip && shipOptions.includes(e.target.id)) {
+        touchedShip = e.target.id;
+      }
+    }
+  };
+
+  addEventListener('touchstart', startHandler);
 
   const dragstart_handler = (ev) => {
     ev.dataTransfer.setData('text/plain', ev.target.id);
@@ -54,44 +134,7 @@ const displayBoards = (
   let list = document.createElement('div');
   list.addEventListener('drop', (ev) => {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData('text/plain');
-    let deploymentBlueprint;
-    if (currentRotation === 'horizontal') {
-      deploymentBlueprint = gameboard1.deploy(
-        shipFactory(`${data}`),
-        `${ev.toElement.id.substr(2)}`,
-        'horizontal'
-      );
-    } else if (currentRotation === 'vertical') {
-      deploymentBlueprint = gameboard1.deploy(
-        shipFactory(`${data}`),
-        `${ev.toElement.id.substr(2)}`,
-        'vertical'
-      );
-    }
-    if (
-      deploymentBlueprint === 'Your deployment would go off the board' ||
-      deploymentBlueprint === 'You cannot deploy on another ship.'
-    ) {
-      return;
-    } else {
-      let newShipyard = [];
-      for (let i = 0; i < awaitingDeployment.length; i++) {
-        if (awaitingDeployment[i].id === data) {
-        } else {
-          newShipyard.push(awaitingDeployment[i]);
-        }
-      }
-      displayBoards(
-        gameboard1,
-        gameboard2,
-        player1,
-        player2,
-        reset,
-        currentRotation,
-        newShipyard
-      );
-    }
+    deploying(ev.toElement.id, ev.dataTransfer.getData('text/plain'));
   });
   list.addEventListener('dragover', (ev) => {
     ev.preventDefault();
@@ -262,7 +305,6 @@ const displayBoards = (
 
     list2.append(listItem2);
   }
-
   const element1 = document.getElementById('carrier');
   if (element1 !== null) {
     element1.addEventListener('dragstart', dragstart_handler);
@@ -283,6 +325,7 @@ const displayBoards = (
   if (element5 !== null) {
     element5.addEventListener('dragstart', dragstart_handler);
   }
+
   return { gameboard1 };
 };
 
