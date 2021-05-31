@@ -127,7 +127,7 @@ const displayBoards = (
 
   content1.append(bodyArea);
   let board1 = document.createElement('div');
-  board1.innerHTML = 'Player 1';
+  board1.innerHTML = 'Human';
   board1.className = 'playerOneBoard';
 
   bodyArea.append(board1);
@@ -235,7 +235,7 @@ const displayBoards = (
   }
 
   let board2 = document.createElement('div');
-  board2.innerHTML = 'Player 2';
+  board2.innerHTML = 'Computer';
   board2.className = 'playerTwoBoard';
   if (remainingDeployments !== null) {
     if (remainingDeployments.length === 0) {
