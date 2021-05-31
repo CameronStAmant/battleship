@@ -48,3 +48,19 @@
   text-align: center;
   padding: 15px;
 }
+
+.hit {
+  background: red;
+  box-shadow: 0 0 0 1px black;
+  margin: 0 0 1px 1px;
+  text-align: center;
+  padding: 15px;
+}
+
+.miss {
+  background: grey;
+  box-shadow: 0 0 0 1px black;
+  margin: 0 0 1px 1px;
+  text-align: center;
+  padding: 15px;
+}
