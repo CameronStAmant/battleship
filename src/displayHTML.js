@@ -227,6 +227,7 @@ const displayBoards = (
     listItem.className = 'grid-item';
     if (value === 'ship') {
       listItem.innerHTML = ' ';
+      listItem.className = 'ship';
     } else {
       listItem.innerHTML = '';
     }
@@ -253,8 +254,8 @@ const displayBoards = (
     if (value === 'ship') {
       listItem2.addEventListener('click', function handler(a) {
         a.currentTarget.removeEventListener(a.type, handler);
-        listItem2.style.backgroundColor = 'red';
         listItem2.innerHTML = ' ';
+        listItem2.className = 'hit';
         player1.attackEnemy(listItem2.id.substr(2), gameboard2);
         if (
           gameboard1.gameOver(gameboard2.board, 'Player 1') === 'Game over!' ||
@@ -266,8 +267,8 @@ const displayBoards = (
         let enemyMove = document.getElementById(
           `1-${player2.attackEnemy(null, gameboard1)}`
         );
-          enemyMove.style.backgroundColor = 'red';
         if (enemyMove.innerHTML === ' ') {
+          enemyMove.className = 'hit';
           if (
             gameboard1.gameOver(gameboard2.board, 'Player 1') ===
               'Game over!' ||
@@ -277,20 +278,20 @@ const displayBoards = (
             location.reload();
           }
         } else {
-          enemyMove.style.backgroundColor = 'green';
+          enemyMove.className = 'miss';
         }
       });
     } else {
       listItem2.addEventListener('click', function handler(a) {
         a.currentTarget.removeEventListener(a.type, handler);
-        listItem2.style.backgroundColor = 'green';
         listItem2.innerHTML = '';
+        listItem2.className = 'miss';
         player1.attackEnemy(listItem2.id.substr(2), gameboard2);
         let enemyMove = document.getElementById(
           `1-${player2.attackEnemy(null, gameboard1)}`
         );
-          enemyMove.style.backgroundColor = 'red';
-        if (enemyMove.innerHTML === ' ') { 
+        if (enemyMove.innerHTML === ' ') {
+          enemyMove.className = 'hit';
           if (
             gameboard1.gameOver(gameboard2.board) === 'Game over!' ||
             gameboard2.gameOver(gameboard1.board) === 'Game over!'
@@ -298,7 +299,7 @@ const displayBoards = (
             location.reload();
           }
         } else {
-          enemyMove.style.backgroundColor = 'green';
+          enemyMove.className = 'miss';
         }
       });
     }
