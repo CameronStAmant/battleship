@@ -40,9 +40,13 @@
 .grid-container {
   display: grid;
   margin: 0;
-  padding: 10px;
+  padding: 0 0 35px 0;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+}
+
+#rotate {
+  margin-bottom: 35px;
 }
 
 .main {
@@ -66,7 +70,7 @@
 
   .horizontal {
     width: math.div($width, 10);
-    margin-right: 5px;
+    margin-right: 10px;
 
     &#carrier {
       height: math.div($width, 10) * 5;
@@ -187,6 +191,9 @@
 
   .grid-container {
     width: $width;
+    padding: 20px;
+  }
+
   #instructions {
     width: math.div($width, 10) * 5;
   }

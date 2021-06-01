@@ -171,10 +171,10 @@ const displayBoards = (
     currentRotation = 'horizontal';
   }
   let rotate = document.createElement('button');
-
+  rotate.id = 'rotate';
   shipyard.append(rotate);
-  const emptyLine = document.createElement('p');
-  shipyard.append(emptyLine);
+  // const emptyLine = document.createElement('p');
+  // shipyard.append(emptyLine);
   const shipsDiv = document.createElement('div');
   shipsDiv.id = 'shipsDiv';
   shipyard.append(shipsDiv);
@@ -214,8 +214,8 @@ const displayBoards = (
       shipsDiv.innerHTML = '';
       for (let i = 0; i < awaitingDeployment.length; i++) {
         const linebreak = document.createElement('br');
-        shipsDiv.append(linebreak);
         shipsDiv.append(awaitingDeployment[i]);
+        shipsDiv.append(linebreak);
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
         shipsInShipyard[
