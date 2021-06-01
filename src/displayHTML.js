@@ -184,23 +184,6 @@ const displayBoards = (
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
         shipsInShipyard[i].src = `images/${shipsInShipyard[i].id}Vertical.jpeg`;
-        switch (shipsInShipyard[i].id) {
-          case 'carrier':
-            shipsInShipyard[i].height = '250';
-            break;
-          case 'battleship':
-            shipsInShipyard[i].height = '200';
-            break;
-          case 'cruiser':
-            shipsInShipyard[i].height = '150';
-            break;
-          case 'submarine':
-            shipsInShipyard[i].height = '150';
-            break;
-          case 'destroyer':
-            shipsInShipyard[i].height = '100';
-            break;
-        }
       }
       currentRotation = 'vertical';
     } else if (currentRotation === 'vertical') {
@@ -214,7 +197,6 @@ const displayBoards = (
         shipsInShipyard[
           i
         ].src = `images/${shipsInShipyard[i].id}Horizontal.jpeg`;
-        shipsInShipyard[i].height = '50';
         shipsInShipyard[i].addEventListener('dragstart', dragstart_handler);
       }
       currentRotation = 'horizontal';
