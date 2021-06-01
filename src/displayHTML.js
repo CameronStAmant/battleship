@@ -127,7 +127,7 @@ const displayBoards = (
 
   content1.append(bodyArea);
   let board1 = document.createElement('div');
-  board1.innerHTML = 'Human';
+  board1.innerHTML = 'Player';
   board1.className = 'playerOneBoard';
 
   bodyArea.append(board1);
