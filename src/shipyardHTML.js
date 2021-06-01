@@ -38,4 +38,4 @@ const shipyardFactory = () => {
   return { carrier, battleship, cruiser, submarine, destroyer };
 };
 
-module.exports = shipyardFactory;
+export default shipyardFactory;

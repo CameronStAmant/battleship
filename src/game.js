@@ -1,7 +1,7 @@
 const playerFactory = require('./player.js');
 const gameboardFactory = require('./gameboard.js');
 const shipFactory = require('./ship.js');
-const displayBoards = require('./displayHTML');
+import displayBoards from './displayHTML';
 
 const gameFactory = () => {
   let gameboard1 = gameboardFactory();
@@ -22,4 +22,4 @@ const gameFactory = () => {
   return { boards, player1, player2, gameboard1, gameboard2 };
 };
 
-module.exports = gameFactory;
+export default gameFactory;

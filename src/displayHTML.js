@@ -1,5 +1,5 @@
 const shipFactory = require('./ship');
-const shipyardFactory = require('./shipyardHTML');
+import shipyardFactory from './shipyardHTML';
 import carrierHorizontal from './images/carrierHorizontal.png';
 import carrierVertical from './images/carrierVertical.png';
 import battleshipHorizontal from './images/battleshipHorizontal.png';
@@ -376,4 +376,4 @@ const displayBoards = (
   return { gameboard1 };
 };
 
-module.exports = displayBoards;
+export default displayBoards;

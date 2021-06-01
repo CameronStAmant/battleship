@@ -1,3 +1,3 @@
-const gameFactory = require('./game.js');
+import gameFactory from './game.js';
 gameFactory();
 import './styles/main.scss';
