@@ -2,11 +2,17 @@
 
 A recreation of the board game battleship.
 
-<p align="center">Desktop</p><img src="./Battleship-Desktop.png" alt="battleship on desktop" />
+## Desktop
 
-<p align='center'>Tablet</p><img src="./Battleship-iPad.png" alt="battleship on tablet" />
+<img src="./Battleship-Desktop.png" alt="battleship on desktop" />
 
-<p align='center'>Phone</p><img src="./Battleship-iPhone.png" alt="battleship on mobile" />
+## Tablet
+
+<img src="./Battleship-iPad.png" alt="battleship on tablet" />
+
+## Phone
+
+<img src="./Battleship-iPhone.png" alt="battleship on mobile" />
 
 ## Features
 
