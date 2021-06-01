@@ -12,7 +12,7 @@ A recreation of the board game battleship.
 
 ## Phone
 
-<img src="./Battleship-iPhone.png" alt="battleship on mobile" />
+<img height='812' weight='375' src="./Battleship-iPhone.png" alt="battleship on mobile" />
 
 ## Features
 
