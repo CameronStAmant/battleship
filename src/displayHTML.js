@@ -214,20 +214,20 @@ const displayBoards = (
         shipsDiv.append(awaitingDeployment[i]);
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
-        switch (i) {
-          case 0:
+        switch (shipsInShipyard[i].id) {
+          case 'carrier':
             shipsInShipyard[i].src = carrierVertical;
             break;
-          case 1:
+          case 'battleship':
             shipsInShipyard[i].src = battleshipVertical;
             break;
-          case 2:
+          case 'submarine':
             shipsInShipyard[i].src = submarineVertical;
             break;
-          case 3:
+          case 'cruiser':
             shipsInShipyard[i].src = cruiserVertical;
             break;
-          case 4:
+          case 'destroyer':
             shipsInShipyard[i].src = destroyerVertical;
             break;
         }
@@ -242,20 +242,20 @@ const displayBoards = (
         shipsDiv.append(linebreak);
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
-        switch (i) {
-          case 0:
+        switch (shipsInShipyard[i].id) {
+          case 'carrier':
             shipsInShipyard[i].src = carrierHorizontal;
             break;
-          case 1:
+          case 'battleship':
             shipsInShipyard[i].src = battleshipHorizontal;
             break;
-          case 2:
+          case 'submarine':
             shipsInShipyard[i].src = submarineHorizontal;
             break;
-          case 3:
+          case 'cruiser':
             shipsInShipyard[i].src = cruiserHorizontal;
             break;
-          case 4:
+          case 'destroyer':
             shipsInShipyard[i].src = destroyerHorizontal;
             break;
         }
