@@ -1,7 +1,6 @@
-.playerOneBoard {
-  margin: 0 auto;
-}
+@use "sass:math";
 
+.playerOneBoard,
 .playerTwoBoard {
   margin: 0 auto;
 }
@@ -38,60 +37,195 @@
   text-align: center;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  .grid-container {
-    width: 85vw;
-    display: grid;
-    margin: 0;
-    padding: 10px;
+.grid-container {
+  display: grid;
+  margin: 0;
+  padding: 10px;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
 
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+.main {
+  display: grid;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  $width: 85vw;
+
+  .grid-container {
+    width: $width;
   }
 
-  .main {
-    display: grid;
+  .horizontal {
+    width: math.div($width, 10);
+    margin-right: 5px;
+
+    &#carrier {
+      height: math.div($width, 10) * 5;
+    }
+
+    &#battleship {
+      height: math.div($width, 10) * 4;
+    }
+
+    &#cruiser {
+      height: math.div($width, 10) * 3;
+    }
+
+    &#submarine {
+      height: math.div($width, 10) * 3;
+    }
+
+    &#destroyer {
+      height: math.div($width, 10) * 2;
+    }
+  }
+
+  .vertical {
+    height: math.div($width, 10);
+
+    &#carrier {
+      width: math.div($width, 10) * 5;
+    }
+
+    &#battleship {
+      width: math.div($width, 10) * 4;
+    }
+
+    &#cruiser {
+      width: math.div($width, 10) * 3;
+    }
+
+    &#submarine {
+      width: math.div($width, 10) * 3;
+    }
+
+    &#destroyer {
+      width: math.div($width, 10) * 2;
+    }
   }
 }
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 768px) {
-  .grid-container {
-    width: 50vw;
-    display: grid;
-    margin: 0;
-    padding: 10px;
+  $width: 50vw;
 
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+  .grid-container {
+    width: $width;
   }
 
-  .main {
-    display: grid;
+  .horizontal {
+    width: math.div($width, 10);
+    margin-right: 5px;
+
+    &#carrier {
+      height: math.div($width, 10) * 5;
+    }
+
+    &#battleship {
+      height: math.div($width, 10) * 4;
+    }
+
+    &#cruiser {
+      height: math.div($width, 10) * 3;
+    }
+
+    &#submarine {
+      height: math.div($width, 10) * 3;
+    }
+
+    &#destroyer {
+      height: math.div($width, 10) * 2;
+    }
+  }
+
+  .vertical {
+    height: math.div($width, 10);
+
+    &#carrier {
+      width: math.div($width, 10) * 5;
+    }
+
+    &#battleship {
+      width: math.div($width, 10) * 4;
+    }
+
+    &#cruiser {
+      width: math.div($width, 10) * 3;
+    }
+
+    &#submarine {
+      width: math.div($width, 10) * 3;
+    }
+
+    &#destroyer {
+      width: math.div($width, 10) * 2;
+    }
   }
 }
 
 @media only screen and (min-device-width: 769px) {
+  $width: 40vw;
+
   .main {
-    display: grid;
     grid-auto-flow: column;
   }
 
   .grid-container {
-    width: 45vw;
-    display: grid;
-    margin: 0;
-    padding: 10px;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    width: $width;
   }
 
-  .playerOneBoard {
-    display: grid;
-    grid-auto-flow: column;
-  }
-
+  .playerOneBoard,
   .playerTwoBoard {
     display: grid;
     grid-auto-flow: column;
+  }
+
+  .horizontal {
+    width: math.div($width, 10);
+    margin-right: 5px;
+
+    &#carrier {
+      height: math.div($width, 10) * 5;
+    }
+
+    &#battleship {
+      height: math.div($width, 10) * 4;
+    }
+
+    &#cruiser {
+      height: math.div($width, 10) * 3;
+    }
+
+    &#submarine {
+      height: math.div($width, 10) * 3;
+    }
+
+    &#destroyer {
+      height: math.div($width, 10) * 2;
+    }
+  }
+
+  .vertical {
+    height: math.div($width, 10);
+
+    &#carrier {
+      width: math.div($width, 10) * 5;
+    }
+
+    &#battleship {
+      width: math.div($width, 10) * 4;
+    }
+
+    &#cruiser {
+      width: math.div($width, 10) * 3;
+    }
+
+    &#submarine {
+      width: math.div($width, 10) * 3;
+    }
+
+    &#destroyer {
+      width: math.div($width, 10) * 2;
+    }
   }
 }
