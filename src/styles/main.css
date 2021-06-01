@@ -1,48 +1,20 @@
-.grid-container {
-  width: 500px;
-  height: 500px;
-  display: grid;
-  margin: 0;
-  padding: 10px;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+.playerOneBoard {
+  margin: 0 auto;
+}
+
+.playerTwoBoard {
+  margin: 0 auto;
 }
 
 .grid-item {
   box-shadow: 0 0 0 1px black;
   margin: 0 0 1px 1px;
   text-align: center;
-  padding: 15px;
-}
-
-.main {
-  display: flex;
+  padding-top: 100%;
 }
 
 .hide {
   display: none;
-}
-
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  .grid-container {
-    width: 100vw;
-    height: 500px;
-    display: grid;
-    margin: 0;
-    padding: 10px;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-  }
-
-  .grid-item {
-    border-style: solid;
-    border-color: black;
-    text-align: center;
-  }
-
-  .main {
-    display: flex;
-  }
 }
 
 .ship {
@@ -50,7 +22,6 @@
   box-shadow: 0 0 0 1px black;
   margin: 0 0 1px 1px;
   text-align: center;
-  padding: 15px;
 }
 
 .hit {
@@ -58,7 +29,6 @@
   box-shadow: 0 0 0 1px black;
   margin: 0 0 1px 1px;
   text-align: center;
-  padding: 15px;
 }
 
 .miss {
@@ -66,5 +36,62 @@
   box-shadow: 0 0 0 1px black;
   margin: 0 0 1px 1px;
   text-align: center;
-  padding: 15px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .grid-container {
+    width: 85vw;
+    display: grid;
+    margin: 0;
+    padding: 10px;
+
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  .main {
+    display: grid;
+  }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 768px) {
+  .grid-container {
+    width: 50vw;
+    display: grid;
+    margin: 0;
+    padding: 10px;
+
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  .main {
+    display: grid;
+  }
+}
+
+@media only screen and (min-device-width: 769px) {
+  .main {
+    display: grid;
+    grid-auto-flow: column;
+  }
+
+  .grid-container {
+    width: 45vw;
+    display: grid;
+    margin: 0;
+    padding: 10px;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  .playerOneBoard {
+    display: grid;
+    grid-auto-flow: column;
+  }
+
+  .playerTwoBoard {
+    display: grid;
+    grid-auto-flow: column;
+  }
 }
