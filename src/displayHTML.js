@@ -1,5 +1,15 @@
 const shipFactory = require('./ship');
 const shipyardFactory = require('./shipyardHTML');
+import carrierHorizontal from './images/carrierHorizontal.png';
+import carrierVertical from './images/carrierVertical.png';
+import battleshipHorizontal from './images/battleshipHorizontal.png';
+import battleshipVertical from './images/battleshipVertical.png';
+import submarineHorizontal from './images/submarineHorizontal.png';
+import submarineVertical from './images/submarineVertical.png';
+import cruiserHorizontal from './images/cruiserHorizontal.png';
+import cruiserVertical from './images/cruiserVertical.png';
+import destroyerHorizontal from './images/destroyerHorizontal.png';
+import destroyerVertical from './images/destroyerVertical.png';
 
 const displayBoards = (
   gameboard1,
@@ -135,7 +145,6 @@ const displayBoards = (
     if (currentRotation === 'vertical') {
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     } else if (currentRotation === 'horizontal') {
-      ev.path[0].src = `images/${ev.path[0].id}Horizontal.png`;
       ev.dataTransfer.setDragImage(ev.path[0], 25, 25);
     }
   };
@@ -204,7 +213,23 @@ const displayBoards = (
         shipsDiv.append(awaitingDeployment[i]);
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
-        shipsInShipyard[i].src = `images/${shipsInShipyard[i].id}Vertical.png`;
+        switch (i) {
+          case 0:
+            shipsInShipyard[i].src = carrierVertical;
+            break;
+          case 1:
+            shipsInShipyard[i].src = battleshipVertical;
+            break;
+          case 2:
+            shipsInShipyard[i].src = submarineVertical;
+            break;
+          case 3:
+            shipsInShipyard[i].src = cruiserVertical;
+            break;
+          case 4:
+            shipsInShipyard[i].src = destroyerVertical;
+            break;
+        }
         shipsInShipyard[i].className = 'rotateMe horizontal';
       }
       currentRotation = 'vertical';
@@ -216,9 +241,23 @@ const displayBoards = (
         shipsDiv.append(linebreak);
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
-        shipsInShipyard[
-          i
-        ].src = `images/${shipsInShipyard[i].id}Horizontal.png`;
+        switch (i) {
+          case 0:
+            shipsInShipyard[i].src = carrierHorizontal;
+            break;
+          case 1:
+            shipsInShipyard[i].src = battleshipHorizontal;
+            break;
+          case 2:
+            shipsInShipyard[i].src = submarineHorizontal;
+            break;
+          case 3:
+            shipsInShipyard[i].src = cruiserHorizontal;
+            break;
+          case 4:
+            shipsInShipyard[i].src = destroyerHorizontal;
+            break;
+        }
         shipsInShipyard[i].className = 'rotateMe vertical';
         shipsInShipyard[i].addEventListener('dragstart', dragstart_handler);
       }

@@ -1,30 +1,36 @@
+import carrierVertical from './images/carrierVertical.png';
+import battleshipVertical from './images/battleshipVertical.png';
+import submarineVertical from './images/submarineVertical.png';
+import cruiserVertical from './images/cruiserVertical.png';
+import destroyerVertical from './images/destroyerVertical.png';
+
 const shipyardFactory = () => {
   const carrier = document.createElement('img');
-  carrier.src = 'images/carrierVertical.png';
+  carrier.src = carrierVertical;
   carrier.id = 'carrier';
   carrier.className = 'rotateMe horizontal';
   carrier.setAttribute('draggable', 'true');
 
   const battleship = document.createElement('img');
-  battleship.src = 'images/battleshipVertical.png';
+  battleship.src = battleshipVertical;
   battleship.id = 'battleship';
   battleship.className = 'rotateMe horizontal';
   battleship.setAttribute('draggable', 'true');
 
   const cruiser = document.createElement('img');
-  cruiser.src = 'images/cruiserVertical.png';
+  cruiser.src = submarineVertical;
   cruiser.id = 'cruiser';
   cruiser.className = 'rotateMe horizontal';
   cruiser.setAttribute('draggable', 'true');
 
   const submarine = document.createElement('img');
-  submarine.src = 'images/submarineVertical.png';
+  submarine.src = cruiserVertical;
   submarine.id = 'submarine';
   submarine.className = 'rotateMe horizontal';
   submarine.setAttribute('draggable', 'true');
 
   const destroyer = document.createElement('img');
-  destroyer.src = 'images/destroyerVertical.png';
+  destroyer.src = destroyerVertical;
   destroyer.id = 'destroyer';
   destroyer.className = 'rotateMe horizontal';
   destroyer.setAttribute('draggable', 'true');
