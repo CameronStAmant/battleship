@@ -197,8 +197,9 @@ const displayBoards = (
   for (let i = 0; i < awaitingDeployment.length; i++) {
     if (currentRotation === 'horizontal') {
       const linebreak = document.createElement('br');
-      shipsDiv.append(linebreak);
+
       shipsDiv.append(awaitingDeployment[i]);
+      shipsDiv.append(linebreak);
     } else {
       shipsDiv.append(awaitingDeployment[i]);
     }
