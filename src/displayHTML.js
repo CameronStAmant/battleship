@@ -184,6 +184,7 @@ const displayBoards = (
       }
       for (let i = 0; i < shipsInShipyard.length; i++) {
         shipsInShipyard[i].src = `images/${shipsInShipyard[i].id}Vertical.jpeg`;
+        shipsInShipyard[i].className = 'rotateMe horizontal';
       }
       currentRotation = 'vertical';
     } else if (currentRotation === 'vertical') {
@@ -197,6 +198,7 @@ const displayBoards = (
         shipsInShipyard[
           i
         ].src = `images/${shipsInShipyard[i].id}Horizontal.jpeg`;
+        shipsInShipyard[i].className = 'rotateMe vertical';
         shipsInShipyard[i].addEventListener('dragstart', dragstart_handler);
       }
       currentRotation = 'horizontal';
