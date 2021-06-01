@@ -9,7 +9,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(jpeg)$/i,
+        test: /\.(png)$/i,
         type: 'asset/resource',
       },
       {
