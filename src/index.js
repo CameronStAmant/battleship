@@ -1,5 +1,3 @@
 const gameFactory = require('./game.js');
-const game = gameFactory();
+gameFactory();
 import './styles/main.scss';
-
-game();
