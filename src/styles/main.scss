@@ -56,6 +56,10 @@
     width: $width;
   }
 
+  #instructions {
+    width: math.div($width, 10) * 5;
+  }
+
   .horizontal {
     width: math.div($width, 10);
     margin-right: 5px;
@@ -111,6 +115,10 @@
 
   .grid-container {
     width: $width;
+  }
+
+  #instructions {
+    width: math.div($width, 10) * 5;
   }
 
   .horizontal {
@@ -172,6 +180,8 @@
 
   .grid-container {
     width: $width;
+  #instructions {
+    width: math.div($width, 10) * 5;
   }
 
   .playerOneBoard,

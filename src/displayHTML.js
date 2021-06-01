@@ -178,6 +178,14 @@ const displayBoards = (
   const shipsDiv = document.createElement('div');
   shipsDiv.id = 'shipsDiv';
   shipyard.append(shipsDiv);
+  const instructions = document.createElement('p');
+  instructions.id = 'instructions';
+  instructions.innerHTML =
+    'To play on mobile, touch the ship you want to deploy, then touch the location on the board.' +
+    '<br />' +
+    '<br />' +
+    'For desktop, click and drag the ship you want to deploy to the location on the board.';
+  shipyard.append(instructions);
   rotate.innerHTML = 'rotate';
   for (let i = 0; i < awaitingDeployment.length; i++) {
     if (currentRotation === 'horizontal') {
@@ -239,6 +247,7 @@ const displayBoards = (
   if (remainingDeployments !== null) {
     if (remainingDeployments.length === 0) {
       rotate.className = 'hide';
+      instructions.className = 'hide';
       bodyArea.append(board2);
     }
   }
