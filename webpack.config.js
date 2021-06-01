@@ -13,7 +13,7 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.css$/i,
+        test: /\.scss$/i,
         use: ['style-loader', 'css-loader'],
       },
     ],
