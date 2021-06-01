@@ -173,8 +173,6 @@ const displayBoards = (
   let rotate = document.createElement('button');
   rotate.id = 'rotate';
   shipyard.append(rotate);
-  // const emptyLine = document.createElement('p');
-  // shipyard.append(emptyLine);
   const shipsDiv = document.createElement('div');
   shipsDiv.id = 'shipsDiv';
   shipyard.append(shipsDiv);
