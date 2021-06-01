@@ -8,7 +8,8 @@ const displayBoards = (
   player2,
   reset,
   rotation = null,
-  remainingDeployments = null
+  remainingDeployments = null,
+  chosenShip = null
 ) => {
   let content1 = document.getElementById('content');
   content1.innerHTML = '';
@@ -65,6 +66,17 @@ const displayBoards = (
       } else if (deploymentBlueprint === 'You cannot deploy on another ship.') {
         warningMessageOnShip();
       }
+      let newShipyard = awaitingDeployment;
+      displayBoards(
+        gameboard1,
+        gameboard2,
+        player1,
+        player2,
+        reset,
+        currentRotation,
+        newShipyard,
+        touchedShip
+      );
       return;
     } else {
       let newShipyard = [];
@@ -95,6 +107,9 @@ const displayBoards = (
   };
 
   const startHandler = (e) => {
+    if (chosenShip) {
+      touchedShip = chosenShip;
+    }
     if (!touchedShip && shipOptions.includes(e.target.id)) {
       touchedShip = e.target.id;
     } else if (
