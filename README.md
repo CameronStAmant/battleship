@@ -17,7 +17,7 @@ A recreation of the board game battleship.
 ## Features
 
 - Drag and drop ships for deployment on desktop and use touch on mobile.
-- Responsive design
+- Responsive design.
 - TDD with Jest.
 - Rotate ships for deployment.
 - Play against computer player.
